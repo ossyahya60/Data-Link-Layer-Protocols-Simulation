@@ -1,0 +1,17 @@
+- node0 sends message with id=3 and content= “$Heglo$” at  2.5 with modification, and piggybacking  Ack number 1.
+- node1 received message with id=3 and content=“$Heglo$” at 2.5 with modification, and piggybacking  Ack number 1.
+- node0 sends message with id=3 and content= “$Heglo$” at  2.51 with modification, and piggybacking  Ack number 1.
+- node1 received message with id=3 and content=“$Heglo$” at 2.51 with modification, and piggybacking  Ack number 1.
+- node1 drops message with id=3
+- node1 timeout for message id=2 at t=3
+- node 1 sends message with id=1 and content= “$Hi$” at 3 and NACK number 2
+- .......................
+- node0 end of input file
+- node1 end of input file
+- total transmission time= 15
+- total number of transmissions= 25
+- the network throughput= 1.3333333 
+
+
+
+
