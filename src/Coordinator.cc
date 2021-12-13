@@ -40,8 +40,9 @@ void Coordinator::initialize()
             arr.push_back(tk);
             token = strtok(NULL, " ");
         }
+        MyMessage_Base * msg = new MyMessage_Base("");
 
-        MyMessage_Base* msg= new MyMessage_Base();
+//        MyMessage_Base* msg= new MyMessage_Base();
         msg->setM_Payload(arr[1].c_str());
         msg->setM_Type(-1);
         //search for "start" in line:
