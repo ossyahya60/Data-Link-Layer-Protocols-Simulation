@@ -32,9 +32,14 @@ class Node : public cSimpleModule
 {
 public:
     int Seq_Num = 0;
+    int Ack_Num = 0;
     bool isSender = false;
     vector<pair<string, string>> dataMessages;
+
+    //helper functions:
     void fillSendData(string path);
+    void handleSendMsg(pair<string, string>);
+    void handleRecieveMsg();
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

@@ -1,6 +1,5 @@
-//
 // Generated file, do not edit! Created by nedtool 5.7 from MyMessage.msg.
-//
+// Generated file, do not edit! Created by nedtool 5.6 from MyMessage.msg.
 
 // Disable warnings about unused variables, empty switch stmts, etc:
 #ifdef _MSC_VER
@@ -179,8 +178,10 @@ inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
 
 MyMessage_Base::MyMessage_Base(const char *name, short kind) : ::omnetpp::cPacket(name,kind)
 {
-    this->Seq_Num = 0;
+    this->msgID = 0;
+    this->sendingTime = 0;
     this->M_Type = 0;
+    this->piggyBackingID = 0;
 }
 
 MyMessage_Base::MyMessage_Base(const MyMessage_Base& other) : ::omnetpp::cPacket(other)
@@ -202,38 +203,54 @@ MyMessage_Base& MyMessage_Base::operator=(const MyMessage_Base& other)
 
 void MyMessage_Base::copy(const MyMessage_Base& other)
 {
-    this->Seq_Num = other.Seq_Num;
+    this->msgID = other.msgID;
+    this->sendingTime = other.sendingTime;
     this->M_Type = other.M_Type;
     this->M_Payload = other.M_Payload;
-    this->mycheckbits = other.mycheckbits;
+    this->crc = other.crc;
+    this->piggyBackingID = other.piggyBackingID;
 }
 
 void MyMessage_Base::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cPacket::parsimPack(b);
-    doParsimPacking(b,this->Seq_Num);
+    doParsimPacking(b,this->msgID);
+    doParsimPacking(b,this->sendingTime);
     doParsimPacking(b,this->M_Type);
     doParsimPacking(b,this->M_Payload);
-    doParsimPacking(b,this->mycheckbits);
+    doParsimPacking(b,this->crc);
+    doParsimPacking(b,this->piggyBackingID);
 }
 
 void MyMessage_Base::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cPacket::parsimUnpack(b);
-    doParsimUnpacking(b,this->Seq_Num);
+    doParsimUnpacking(b,this->msgID);
+    doParsimUnpacking(b,this->sendingTime);
     doParsimUnpacking(b,this->M_Type);
     doParsimUnpacking(b,this->M_Payload);
-    doParsimUnpacking(b,this->mycheckbits);
+    doParsimUnpacking(b,this->crc);
+    doParsimUnpacking(b,this->piggyBackingID);
 }
 
-int MyMessage_Base::getSeq_Num() const
+int MyMessage_Base::getMsgID() const
 {
-    return this->Seq_Num;
+    return this->msgID;
 }
 
-void MyMessage_Base::setSeq_Num(int Seq_Num)
+void MyMessage_Base::setMsgID(int msgID)
 {
-    this->Seq_Num = Seq_Num;
+    this->msgID = msgID;
+}
+
+double MyMessage_Base::getSendingTime() const
+{
+    return this->sendingTime;
+}
+
+void MyMessage_Base::setSendingTime(double sendingTime)
+{
+    this->sendingTime = sendingTime;
 }
 
 int MyMessage_Base::getM_Type() const
@@ -256,14 +273,24 @@ void MyMessage_Base::setM_Payload(const char * M_Payload)
     this->M_Payload = M_Payload;
 }
 
-bits& MyMessage_Base::getMycheckbits()
+bits& MyMessage_Base::getCrc()
 {
-    return this->mycheckbits;
+    return this->crc;
 }
 
-void MyMessage_Base::setMycheckbits(const bits& mycheckbits)
+void MyMessage_Base::setCrc(const bits& crc)
 {
-    this->mycheckbits = mycheckbits;
+    this->crc = crc;
+}
+
+int MyMessage_Base::getPiggyBackingID() const
+{
+    return this->piggyBackingID;
+}
+
+void MyMessage_Base::setPiggyBackingID(int piggyBackingID)
+{
+    this->piggyBackingID = piggyBackingID;
 }
 
 class MyMessageDescriptor : public omnetpp::cClassDescriptor
@@ -332,7 +359,7 @@ const char *MyMessageDescriptor::getProperty(const char *propertyname) const
 int MyMessageDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 4+basedesc->getFieldCount() : 4;
+    return basedesc ? 6+basedesc->getFieldCount() : 6;
 }
 
 unsigned int MyMessageDescriptor::getFieldTypeFlags(int field) const
@@ -347,9 +374,11 @@ unsigned int MyMessageDescriptor::getFieldTypeFlags(int field) const
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
         FD_ISCOMPOUND,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<4) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<6) ? fieldTypeFlags[field] : 0;
 }
 
 const char *MyMessageDescriptor::getFieldName(int field) const
@@ -361,22 +390,26 @@ const char *MyMessageDescriptor::getFieldName(int field) const
         field -= basedesc->getFieldCount();
     }
     static const char *fieldNames[] = {
-        "Seq_Num",
+        "msgID",
+        "sendingTime",
         "M_Type",
         "M_Payload",
-        "mycheckbits",
+        "crc",
+        "piggyBackingID",
     };
-    return (field>=0 && field<4) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<6) ? fieldNames[field] : nullptr;
 }
 
 int MyMessageDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0]=='S' && strcmp(fieldName, "Seq_Num")==0) return base+0;
-    if (fieldName[0]=='M' && strcmp(fieldName, "M_Type")==0) return base+1;
-    if (fieldName[0]=='M' && strcmp(fieldName, "M_Payload")==0) return base+2;
-    if (fieldName[0]=='m' && strcmp(fieldName, "mycheckbits")==0) return base+3;
+    if (fieldName[0]=='m' && strcmp(fieldName, "msgID")==0) return base+0;
+    if (fieldName[0]=='s' && strcmp(fieldName, "sendingTime")==0) return base+1;
+    if (fieldName[0]=='M' && strcmp(fieldName, "M_Type")==0) return base+2;
+    if (fieldName[0]=='M' && strcmp(fieldName, "M_Payload")==0) return base+3;
+    if (fieldName[0]=='c' && strcmp(fieldName, "crc")==0) return base+4;
+    if (fieldName[0]=='p' && strcmp(fieldName, "piggyBackingID")==0) return base+5;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -390,11 +423,13 @@ const char *MyMessageDescriptor::getFieldTypeString(int field) const
     }
     static const char *fieldTypeStrings[] = {
         "int",
+        "double",
         "int",
         "string",
         "bits",
+        "int",
     };
-    return (field>=0 && field<4) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<6) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **MyMessageDescriptor::getFieldPropertyNames(int field) const
@@ -461,10 +496,13 @@ std::string MyMessageDescriptor::getFieldValueAsString(void *object, int field, 
     }
     MyMessage_Base *pp = (MyMessage_Base *)object; (void)pp;
     switch (field) {
-        case 0: return long2string(pp->getSeq_Num());
-        case 1: return long2string(pp->getM_Type());
-        case 2: return oppstring2string(pp->getM_Payload());
-        case 3: {std::string out= pp->getMycheckbits().to_string(); return out.c_str();}
+        case 0: return long2string(pp->getMsgID());
+        case 1: return double2string(pp->getSendingTime());
+        case 2: return long2string(pp->getM_Type());
+        case 3: return oppstring2string(pp->getM_Payload());
+        case 4: {std::string out= pp->getCrc().to_string(); return out.c_str();}
+        //case 4: {std::stringstream out; out << pp->getCrc(); return out.str();}
+        case 5: return long2string(pp->getPiggyBackingID());
         default: return "";
     }
 }
@@ -479,9 +517,11 @@ bool MyMessageDescriptor::setFieldValueAsString(void *object, int field, int i, 
     }
     MyMessage_Base *pp = (MyMessage_Base *)object; (void)pp;
     switch (field) {
-        case 0: pp->setSeq_Num(string2long(value)); return true;
-        case 1: pp->setM_Type(string2long(value)); return true;
-        case 2: pp->setM_Payload((value)); return true;
+        case 0: pp->setMsgID(string2long(value)); return true;
+        case 1: pp->setSendingTime(string2double(value)); return true;
+        case 2: pp->setM_Type(string2long(value)); return true;
+        case 3: pp->setM_Payload((value)); return true;
+        case 5: pp->setPiggyBackingID(string2long(value)); return true;
         default: return false;
     }
 }
@@ -495,7 +535,7 @@ const char *MyMessageDescriptor::getFieldStructName(int field) const
         field -= basedesc->getFieldCount();
     }
     switch (field) {
-        case 3: return omnetpp::opp_typename(typeid(bits));
+        case 4: return omnetpp::opp_typename(typeid(bits));
         default: return nullptr;
     };
 }
@@ -510,7 +550,7 @@ void *MyMessageDescriptor::getFieldStructValuePointer(void *object, int field, i
     }
     MyMessage_Base *pp = (MyMessage_Base *)object; (void)pp;
     switch (field) {
-        case 3: return (void *)(&pp->getMycheckbits()); break;
+        case 4: return (void *)(&pp->getCrc()); break;
         default: return nullptr;
     }
 }

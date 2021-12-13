@@ -32,6 +32,65 @@ void Node::fillSendData(string path)
     file.close();
 }
 
+void Node::handleSendMsg(pair<string, string> msgPair)
+{
+    string errorBits = msgPair.first;
+    string msgText = msgPair.second;
+    double delay = 0;
+    bool duplicated = false;
+    //new msg for sending:
+    MyMessage_Base* nmsg= new MyMessage_Base();
+    nmsg->setMsgID(Seq_Num);
+    nmsg->setM_Type(0); // 0 -> Data
+    nmsg->setSendingTime(simTime().dbl());
+
+    if(errorBits[0] =='1') //modification
+    {
+        int randChar = std::rand() % msgText.length(); // get random index of text message to error it
+        msgText[randChar] += (std::rand() % 10)+1;
+    }
+    if(errorBits[1] =='1') //loss
+    {
+        //handle loss -> put on log file only:
+
+        return;
+    }
+    if(errorBits[2] =='1') //duplication
+    {
+        duplicated = true;
+    }
+    if(errorBits[3] =='1') //delay
+    {
+        //delay = par("delay").doubleValue(); //get it from .ini file
+        //cout << "Delay: " << delay << endl;
+        delay = 3.0;
+    }
+
+    nmsg->setM_Payload(msgText.c_str());
+    if(delay>0)
+        sendDelayed(nmsg, delay, "out");
+    else
+        send(nmsg, "out");
+
+    if (duplicated){
+        MyMessage_Base* dupmsg = new MyMessage_Base();
+        dupmsg->setMsgID(Seq_Num);
+        dupmsg->setM_Type(0); // 0 -> Data
+        dupmsg->setSendingTime(simTime().dbl());
+        dupmsg->setM_Payload(msgText.c_str());
+        sendDelayed(dupmsg,delay+ 0.01, "out");
+    }
+}
+
+void Node::handleRecieveMsg()
+{
+    MyMessage_Base* nmsg= new MyMessage_Base();
+    nmsg->setM_Payload("ACK");
+    nmsg->setMsgID(++Seq_Num);
+    nmsg->setM_Type(1); // 1 -> ACK
+    sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
+}
+
 void Node::initialize()
 {
     // TODO - Generated method body
@@ -41,15 +100,13 @@ void Node::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
     if (msg->isSelfMessage()){
-        MyMessage_Base* nmsg= new MyMessage_Base();
-        nmsg->setM_Payload(dataMessages[Seq_Num].second.c_str());
-        nmsg->setSeq_Num(Seq_Num++);
-        nmsg->setM_Type(0); // 0 -> Data
-        send(nmsg, "out");
+        handleSendMsg(dataMessages[Seq_Num]);
+        //increment the seq. num. (msgID)
+        Seq_Num++;
     }
     else{
        MyMessage_Base * rmsg = check_and_cast<MyMessage_Base *> (msg);
-       int startTime = rmsg->getSeq_Num();
+       int startTime = rmsg->getMsgID();
        if(rmsg->getM_Type() == -1 && startTime != -1) { //sender sent from coordinator
            MyMessage_Base* selfmsg= new MyMessage_Base();
            selfmsg->setM_Payload(rmsg->getM_Payload()); //TODO: read file and save it in a vector
@@ -62,25 +119,30 @@ void Node::handleMessage(cMessage *msg)
            scheduleAt(startTime - simTime(), selfmsg);
        }
        else if (rmsg->getM_Type() != -1){ //msg from node (a peer)
-           cout << rmsg->getM_Payload() << " - " << rmsg->getSeq_Num() << endl;
+           cout << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
            if (isSender) {
-               MyMessage_Base* nmsg= new MyMessage_Base();
 
                if(dataMessages.size() <= Seq_Num)
                    //TODO: signal the end of Node transmission
                    return;
+               //if (Seq_Num == rmsg->getMsgID()){
+                   //Seq_Num = rmsg->getMsgID();
+                   handleSendMsg(dataMessages[Seq_Num]);
+                   //increment the seq. num. (msgID)
+                   Seq_Num++;
+               //} //else discard
 
-               nmsg->setM_Payload(dataMessages[Seq_Num].second.c_str());
-               nmsg->setSeq_Num(Seq_Num++);
-               nmsg->setM_Type(0); // 0 -> Data
-               sendDelayed(nmsg, 2, "out"); //TODO: handle delay time correctly
            }
            else {
-               MyMessage_Base* nmsg= new MyMessage_Base();
-               nmsg->setM_Payload("ACK");
-               nmsg->setSeq_Num(++Seq_Num);
-               nmsg->setM_Type(1); // 1 -> ACK
-               sendDelayed(nmsg, 2, "out"); //TODO: handle delay time correctly
+               //if(Ack_Num == rmsg->getMsgID() + 1)
+               //{
+                   MyMessage_Base* nmsg= new MyMessage_Base();
+                   nmsg->setM_Payload("ACK");
+                   //Ack_Num = rmsg->getMsgID() + 1;
+                   nmsg->setMsgID(++Ack_Num);
+                   nmsg->setM_Type(1); // 1 -> ACK
+                   sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
+               //} //else discard
            }
        }
     }
