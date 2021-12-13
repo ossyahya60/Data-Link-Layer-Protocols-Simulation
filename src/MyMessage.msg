@@ -24,10 +24,12 @@ class noncobject bits;
 
 packet MyMessage {
     @customize(true);  // see the generated C++ header for more info
-    int Seq_Num;
-    int M_Type;
+    int msgID; //sequence num
+    double sendingTime;
+    int M_Type; //0->Data // 1->ACK // 2->NACK
     string M_Payload;
-    bits mycheckbits;
+    bits crc;
+    int piggyBackingID; //ACK no.
 }
 
 

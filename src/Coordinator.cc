@@ -47,11 +47,11 @@ void Coordinator::initialize()
         //search for "start" in line:
         if(count(arr.begin(), arr.end(), "start")>0){ //sender
             //cout << "sender!!" << endl;
-            msg->setSeq_Num(stoi(arr[3])); //TODO: handle new line problem (at the end of file)
+            msg->setMsgID(stoi(arr[3]));
             send(msg, "out", stoi(arr[0]));
         }
         else if(arr.size() > 0 && arr[0] != " ") { //receiver
-            msg->setSeq_Num(-1);
+            msg->setMsgID(-1);
             send(msg, "out", stoi(arr[0]));
         }
         /*if(arr.size() > 2){ //sender
