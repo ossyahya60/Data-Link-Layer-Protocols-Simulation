@@ -43,7 +43,6 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
     nmsg->setMsgID(seqNo);
     nmsg->setM_Type(0); // 0 -> Data
     nmsg->setSendingTime(simTime().dbl());
-    cout << msgText<<msgText.size()<<endl;
     string newMsgText = "";
 
     int no_of_itr = msgText.size();
@@ -68,7 +67,7 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
     {
         //handle loss -> put on log file only:
         cout <<"Lost message: at time = "<< simTime().dbl() << " : " << msgText << " - " << seqNo << endl;
-        int timeout=5;//getParentModule()->par("timeout").intValue();
+        int timeout = getParentModule()->par("timeout").intValue();
         MyMessage_Base* selfmsg= new MyMessage_Base();
         scheduleAt(simTime() + timeout, selfmsg);
         return;
@@ -79,9 +78,7 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
     }
     if(errorBits[3] =='1') //delay
     {
-        //delay = getParentModule()->par("delay").doubleValue(); //get it from .ini file
-        //cout << "Delay: " << delay << endl;
-        delay = 3.0;
+        delay = getParentModule()->par("delay").doubleValue(); //get it from .ini file
     }
 
     nmsg->setM_Payload(msgText.c_str());
@@ -102,7 +99,7 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
     }
 
     bitset<8> temp(msgText[0]);
-    cout<< (temp^generator_bits).to_string()<<endl;
+    //cout<< (temp^generator_bits).to_string()<<endl;
 
 
 }
@@ -185,16 +182,6 @@ void Node::handleMessage(cMessage *msg)
                }
                cout <<"Removing the ByteStuffing: "<< temp_byte_stuffing<<endl;
 
-               //if(Ack_Num == rmsg->getMsgID() + 1)
-               //{
-                   MyMessage_Base* nmsg= new MyMessage_Base();
-                   nmsg->setM_Payload("ACK");
-                   //Ack_Num = rmsg->getMsgID() + 1;
-                   nmsg->setMsgID(++Ack_Num);
-                   nmsg->setM_Type(1); // 1 -> ACK
-
-                   sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
-               //} //else discard
                if(Ack_Num <= rmsg->getMsgID()) //less than for Lost case!
                {
                    Ack_Num = rmsg->getMsgID()+1;
