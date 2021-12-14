@@ -32,7 +32,7 @@ void Node::fillSendData(string path)
     file.close();
 }
 
-void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
+void Node::handleSendMsg(pair<string, string> msgPair, int seqNo, MyMessage_Base* rmsg)
 {
     string errorBits = msgPair.first;
     string msgText = msgPair.second;
@@ -44,6 +44,7 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
     nmsg->setM_Type(0); // 0 -> Data
     nmsg->setSendingTime(simTime().dbl());
     string newMsgText = "";
+    nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
 
     int no_of_itr = msgText.size();
 
@@ -58,36 +59,58 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
 
     std::bitset<8> generator_bits(generator);
 
+    string errors = "";
+
     if(errorBits[0] =='1') //modification
     {
+        errors += errors.length() > 0? ", modification" : "modification";
         int randChar = std::rand() % msgText.length(); // get random index of text message to error it
         msgText[randChar] += (std::rand() % 10)+1;
     }
     if(errorBits[1] =='1') //loss
     {
+        errors += errors.length() > 0? ", loss" : "loss";
         //handle loss -> put on log file only:
         cout <<"Lost message: at time = "<< simTime().dbl() << " : " << msgText << " - " << seqNo << endl;
         int timeout = getParentModule()->par("timeout").intValue();
         MyMessage_Base* selfmsg= new MyMessage_Base();
+
+        totalNumberOfTransmissions++;
+        nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+        cout << nmsg->getNumberOfTransmissions() << endl;
+        outStream << "- " << getName() << " timeout for message id=" << nmsg->getMsgID() << " at " << simTime() + timeout << endl;
+
         scheduleAt(simTime() + timeout, selfmsg);
         return;
     }
     if(errorBits[2] =='1') //duplication
     {
+        errors += errors.length() > 0? ", duplication" : "duplication";
         duplicated = true;
     }
     if(errorBits[3] =='1') //delay
     {
+        errors += errors.length() > 0? ", delay" : "delay";
         delay = getParentModule()->par("delay").doubleValue(); //get it from .ini file
     }
 
     nmsg->setM_Payload(msgText.c_str());
     if(delay>0){
+        totalNumberOfTransmissions++;
         nmsg->setSendingTime(simTime().dbl()+ delay);
+        nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+        cout << nmsg->getNumberOfTransmissions() << endl;
+        outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\"" << " at " << simTime() + delay << " with " << ((errors.length() > 0)? errors : "no errors") << endl;
         sendDelayed(nmsg, delay, "out");
     }
     else
+    {
+        totalNumberOfTransmissions++;
+        nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+        cout << nmsg->getNumberOfTransmissions() << endl;
+        outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\"" << " at " << simTime() << " with " << ((errors.length() > 0)? errors : "no errors") << endl;
         send(nmsg, "out");
+    }
 
     if (duplicated){
         MyMessage_Base* dupmsg = new MyMessage_Base();
@@ -95,6 +118,10 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
         dupmsg->setM_Type(0); // 0 -> Data
         dupmsg->setSendingTime(simTime().dbl()+delay+ 0.01);
         dupmsg->setM_Payload(msgText.c_str());
+        totalNumberOfTransmissions++;
+        nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+        cout << nmsg->getNumberOfTransmissions() << endl;
+        outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\"" << " at " << simTime() + delay + 0.01 << " with " << ((errors.length() > 0)? errors : "no errors") << endl;
         sendDelayed(dupmsg,delay+ 0.01, "out");
     }
 
@@ -104,33 +131,46 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
 
 }
 
-void Node::handleRecieveMsg(int ackNo)
+void Node::handleRecieveMsg(int ackNo, MyMessage_Base* rmsg)
 {
     MyMessage_Base* nmsg= new MyMessage_Base();
     nmsg->setM_Payload("ACK");
     nmsg->setPiggyBackingID(ackNo);
     nmsg->setM_Type(1); // 1 -> ACK
     nmsg->setSendingTime(simTime().dbl()+0.2);
+    totalNumberOfTransmissions++;
+    nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+    cout << nmsg->getNumberOfTransmissions() << endl;
+    outStream << "- " << getName() << " received message with id=" << rmsg->getMsgID() << " and content=\"" << rmsg->getM_Payload() << "\"" << " at " << simTime() << endl;
     sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
 }
 
 void Node::initialize()
 {
+    string nodeName = getName();
+    nodeName = nodeName.substr(4, nodeName.length() - 4);
     // TODO - Generated method body
+    string outputFileName = "../files/Outputs/pair";
+    if(atoi(nodeName.c_str())%2==0){ //even index
+        outputFileName += nodeName + to_string(atoi(nodeName.c_str()) + 1) + ".txt";
+    } else { //odd
+        outputFileName += to_string((atoi(nodeName.c_str()) - 1)) + nodeName + ".txt";
+    }
+    outStream.open("../files/Outputs/pair01.txt", std::fstream::in | std::fstream::out | std::fstream::app); //file name shouldn't be hard-coded
 }
 
 void Node::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
     if (msg->isSelfMessage()){
-        handleSendMsg(dataMessages[Seq_Num], Seq_Num);
+        handleSendMsg(dataMessages[Seq_Num], Seq_Num, check_and_cast<MyMessage_Base *> (msg));
         //then increment the seq. num. (msgID)
         Seq_Num++;
     }
     else{
        MyMessage_Base * rmsg = check_and_cast<MyMessage_Base *> (msg);
-       int startTime = rmsg->getMsgID();
-       if(rmsg->getM_Type() == -1 && startTime != -1) { //sender sent from coordinator
+       int initTime = rmsg->getMsgID();
+       if(rmsg->getM_Type() == -1 && initTime != -1) { //sender sent from coordinator
            MyMessage_Base* selfmsg= new MyMessage_Base();
            selfmsg->setM_Payload(rmsg->getM_Payload()); //TODO: read file and save it in a vector
 
@@ -138,8 +178,12 @@ void Node::handleMessage(cMessage *msg)
            string fileName = rmsg->getM_Payload();
            fillSendData("../files/inputs/" + fileName);
 
+           ///
+           startTime = initTime - simTime().dbl();
+           //
+
            isSender = true;
-           scheduleAt(startTime - simTime(), selfmsg);
+           scheduleAt(initTime - simTime(), selfmsg);
        }
        else if (rmsg->getM_Type() != -1){ //msg from node (a peer)
 
@@ -148,13 +192,22 @@ void Node::handleMessage(cMessage *msg)
                if(dataMessages.size() <= Seq_Num){
                    cout <<"At Sender: at time = "<< rmsg->getSendingTime() << " : "<< rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << " but we are DONE!!" << endl;
                    //TODO: signal the end of Node transmission
+
+                   outStream << "- ..................." << endl;
+                   outStream << "- end of input file" << endl;
+                   outStream << "- total transmission time= " << simTime().dbl() - startTime << endl;
+                   outStream << "- total number of transmissions= " << totalNumberOfTransmissions + rmsg->getNumberOfTransmissions() << endl;
+                   outStream << "- the network throughput= " << dataMessages.size() / (simTime().dbl() - startTime) << endl;
+
+                   outStream.close();
+
                    return;
                }
 
                if (Seq_Num == rmsg->getPiggyBackingID()){
                    //put that in the file
                    cout <<"At Sender: at time = "<< rmsg->getSendingTime() << " : "<< rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << endl;
-                   handleSendMsg(dataMessages[Seq_Num], Seq_Num);
+                   handleSendMsg(dataMessages[Seq_Num], Seq_Num, rmsg);
                    //then increment the seq. num. (msgID)
                    Seq_Num++;
                }
@@ -178,26 +231,21 @@ void Node::handleMessage(cMessage *msg)
                    else{
                        is_esc = true;
                    }
-
                }
                cout <<"Removing the ByteStuffing: "<< temp_byte_stuffing<<endl;
 
                if(Ack_Num <= rmsg->getMsgID()) //less than for Lost case!
                {
-                   Ack_Num = rmsg->getMsgID()+1;
-                   handleRecieveMsg(Ack_Num);
+                   Ack_Num = rmsg->getMsgID() + 1;
+                   handleRecieveMsg(Ack_Num, rmsg);
                    //put that in file
                    cout <<"At Receiver: at time = "<< rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
                }
                else { //discard this frame (not proceeded to Network layer)
-                   handleRecieveMsg(Ack_Num);
+                   handleRecieveMsg(Ack_Num, rmsg);
                    cout <<"At Receiver(discarded) : at time = "<< rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
                }
            }
        }
     }
-
 }
-
-
-

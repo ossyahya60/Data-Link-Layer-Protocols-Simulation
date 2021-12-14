@@ -1,0 +1,20 @@
+- node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3 with modification, duplication
+- node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3.01 with modification, duplication
+- node1 received message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3
+- node1 received message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3.01
+- node0 sends message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" at 3.2 with no errors
+- node1 received message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" at 3.2
+- node0 timeout for message id=2 at 8.4
+- node0 sends message with id=3 and content="$The biological function of a flower is to facilitate reproduction,$" at 8.4 with no errors
+- node1 received message with id=3 and content="$The biological function of a flower is to facilitate reproduction,$" at 8.4
+- node0 sends message with id=4 and content="$usually by providing a mechanism for the union of sperm with eggs.$" at 11.6 with delay
+- node1 received message with id=4 and content="$usually by providing a mechanism for the union of sperm with eggs.$" at 11.6
+- node0 sends message with id=5 and content="$Flowers may facilitate outcrossing/$$" at 11.8 with no errors
+- node1 received message with id=5 and content="$Flowers may facilitate outcrossing/$$" at 11.8
+- node0 sends message with id=6 and content="$(fusion of sperm and eggs from different individuals in a population)$" at 12 with no errors
+- node1 received message with id=6 and content="$(fusion of sperm and eggs from different individuals in a population)$" at 12
+- ...................
+- end of input file
+- total transmission time= 9.2
+- total number of transmissions= 15
+- the network throughput= 0.76087

@@ -1,5 +1,6 @@
+//
 // Generated file, do not edit! Created by nedtool 5.7 from MyMessage.msg.
-// Generated file, do not edit! Created by nedtool 5.6 from MyMessage.msg.
+//
 
 // Disable warnings about unused variables, empty switch stmts, etc:
 #ifdef _MSC_VER
@@ -182,6 +183,7 @@ MyMessage_Base::MyMessage_Base(const char *name, short kind) : ::omnetpp::cPacke
     this->sendingTime = 0;
     this->M_Type = 0;
     this->piggyBackingID = 0;
+    this->numberOfTransmissions = 0;
 }
 
 MyMessage_Base::MyMessage_Base(const MyMessage_Base& other) : ::omnetpp::cPacket(other)
@@ -209,6 +211,7 @@ void MyMessage_Base::copy(const MyMessage_Base& other)
     this->M_Payload = other.M_Payload;
     this->crc = other.crc;
     this->piggyBackingID = other.piggyBackingID;
+    this->numberOfTransmissions = other.numberOfTransmissions;
 }
 
 void MyMessage_Base::parsimPack(omnetpp::cCommBuffer *b) const
@@ -220,6 +223,7 @@ void MyMessage_Base::parsimPack(omnetpp::cCommBuffer *b) const
     doParsimPacking(b,this->M_Payload);
     doParsimPacking(b,this->crc);
     doParsimPacking(b,this->piggyBackingID);
+    doParsimPacking(b,this->numberOfTransmissions);
 }
 
 void MyMessage_Base::parsimUnpack(omnetpp::cCommBuffer *b)
@@ -231,6 +235,7 @@ void MyMessage_Base::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->M_Payload);
     doParsimUnpacking(b,this->crc);
     doParsimUnpacking(b,this->piggyBackingID);
+    doParsimUnpacking(b,this->numberOfTransmissions);
 }
 
 int MyMessage_Base::getMsgID() const
@@ -291,6 +296,16 @@ int MyMessage_Base::getPiggyBackingID() const
 void MyMessage_Base::setPiggyBackingID(int piggyBackingID)
 {
     this->piggyBackingID = piggyBackingID;
+}
+
+int MyMessage_Base::getNumberOfTransmissions() const
+{
+    return this->numberOfTransmissions;
+}
+
+void MyMessage_Base::setNumberOfTransmissions(int numberOfTransmissions)
+{
+    this->numberOfTransmissions = numberOfTransmissions;
 }
 
 class MyMessageDescriptor : public omnetpp::cClassDescriptor
@@ -359,7 +374,7 @@ const char *MyMessageDescriptor::getProperty(const char *propertyname) const
 int MyMessageDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 6+basedesc->getFieldCount() : 6;
+    return basedesc ? 7+basedesc->getFieldCount() : 7;
 }
 
 unsigned int MyMessageDescriptor::getFieldTypeFlags(int field) const
@@ -377,8 +392,9 @@ unsigned int MyMessageDescriptor::getFieldTypeFlags(int field) const
         FD_ISEDITABLE,
         FD_ISCOMPOUND,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<6) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<7) ? fieldTypeFlags[field] : 0;
 }
 
 const char *MyMessageDescriptor::getFieldName(int field) const
@@ -396,8 +412,9 @@ const char *MyMessageDescriptor::getFieldName(int field) const
         "M_Payload",
         "crc",
         "piggyBackingID",
+        "numberOfTransmissions",
     };
-    return (field>=0 && field<6) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<7) ? fieldNames[field] : nullptr;
 }
 
 int MyMessageDescriptor::findField(const char *fieldName) const
@@ -410,6 +427,7 @@ int MyMessageDescriptor::findField(const char *fieldName) const
     if (fieldName[0]=='M' && strcmp(fieldName, "M_Payload")==0) return base+3;
     if (fieldName[0]=='c' && strcmp(fieldName, "crc")==0) return base+4;
     if (fieldName[0]=='p' && strcmp(fieldName, "piggyBackingID")==0) return base+5;
+    if (fieldName[0]=='n' && strcmp(fieldName, "numberOfTransmissions")==0) return base+6;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -428,8 +446,9 @@ const char *MyMessageDescriptor::getFieldTypeString(int field) const
         "string",
         "bits",
         "int",
+        "int",
     };
-    return (field>=0 && field<6) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<7) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **MyMessageDescriptor::getFieldPropertyNames(int field) const
@@ -500,9 +519,9 @@ std::string MyMessageDescriptor::getFieldValueAsString(void *object, int field, 
         case 1: return double2string(pp->getSendingTime());
         case 2: return long2string(pp->getM_Type());
         case 3: return oppstring2string(pp->getM_Payload());
-        case 4: {std::string out= pp->getCrc().to_string(); return out.c_str();}
         //case 4: {std::stringstream out; out << pp->getCrc(); return out.str();}
         case 5: return long2string(pp->getPiggyBackingID());
+        case 6: return long2string(pp->getNumberOfTransmissions());
         default: return "";
     }
 }
@@ -522,6 +541,7 @@ bool MyMessageDescriptor::setFieldValueAsString(void *object, int field, int i, 
         case 2: pp->setM_Type(string2long(value)); return true;
         case 3: pp->setM_Payload((value)); return true;
         case 5: pp->setPiggyBackingID(string2long(value)); return true;
+        case 6: pp->setNumberOfTransmissions(string2long(value)); return true;
         default: return false;
     }
 }

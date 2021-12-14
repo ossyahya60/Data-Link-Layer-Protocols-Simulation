@@ -30,6 +30,7 @@ packet MyMessage {
     string M_Payload;
     bits crc;
     int piggyBackingID; //ACK no.
+    int numberOfTransmissions;
 }
 
 

@@ -22,6 +22,7 @@
 #include <vector>
 #include <fstream>
 #include <string.h>
+#include "MyMessage_m.h"
 using namespace std;
 using namespace omnetpp;
 
@@ -34,13 +35,16 @@ public:
     int Seq_Num = 0;
     int Ack_Num = 0;
     bool isSender = false;
+    double startTime = 0;
     string generator = "111001";
     vector<pair<string, string>> dataMessages;
+    std::fstream outStream;
+    int totalNumberOfTransmissions = 0;
 
     //helper functions:
     void fillSendData(string path);
-    void handleSendMsg(pair<string, string>,int);
-    void handleRecieveMsg(int);
+    void handleSendMsg(pair<string, string>,int, MyMessage_Base*);
+    void handleRecieveMsg(int, MyMessage_Base*);
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
