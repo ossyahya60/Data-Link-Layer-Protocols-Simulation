@@ -1,0 +1,26 @@
+- node5 sends message with id=0 and content="$/$An aurora, also known as the polar lights/$ or aurora polaris,$" at 2 with duplication
+- node5 sends message with id=0 and content="$/$An aurora, also known as the polar lights/$ or aurora polaris,$" at 2.01 with duplication
+- node4 received message with id=0 and content="$/$An aurora, also known as the polar lights/$ or aurora polaris,$" at 2
+- node4 received message with id=0 and content="$/$An aurora, also known as the polar lights/$ or aurora polaris,$" at 2.01
+- node5 sends message with id=1 and content="$is a natural light display in Earth's sky,$" at 2.2 with no errors
+- node4 received message with id=1 and content="$is a natural light display in Earth's sky,$" at 2.2
+- node5 sends message with id=2 and content="$predominantly seen in high-latitude regions$" at 2.4 with duplication
+- node5 sends message with id=2 and content="$predominantly seen in high-latitude regions$" at 2.41 with duplication
+- node4 received message with id=2 and content="$predominantly seen in high-latitude regions$" at 2.4
+- node4 received message with id=2 and content="$predominantly seen in high-latitude regions$" at 2.41
+- node5 sends message with id=3 and content="$(around the Arctic//'and Antarctic).$" at 2.6 with modification, duplication
+- node5 sends message with id=3 and content="$(around the Arctic//'and Antarctic).$" at 2.61 with modification, duplication
+- node4 received message with id=3 and content="$(around the Arctic//'and Antarctic).$" at 2.6
+- node4 received message with id=3 and content="$(around the Arctic//'and Antarctic).$" at 2.61
+- node5 sends message with id=4 and content="$Auroras display dynamic patterns of brilliant lights//$" at 2.8 with no errors
+- node4 received message with id=4 and content="$Auroras display dynamic patterns of brilliant lights//$" at 2.8
+- node5 sends message with id=5 and content="$that appear as curtains,$" at 3 with no errors
+- node4 received message with id=5 and content="$that appear as curtains,$" at 3
+- node5 sends message with id=6 and content="$rays, spirals/$$" at 3.2 with no errors
+- node4 received message with id=6 and content="$rays, spirals/$$" at 3.2
+- node5 timeout for message id=7 at 8.4
+- ...................
+- end of input file
+- total transmission time= 6.4
+- total number of transmissions= 22
+- the network throughput= 1.25

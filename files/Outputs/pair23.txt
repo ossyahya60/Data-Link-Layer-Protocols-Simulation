@@ -1,0 +1,21 @@
+- node2 sends message with id=0 and content="$Sherlock Holmes is a fictional detective$" at 7 with no errors
+- node3 received message with id=0 and content="$Sherlock Holmes is a fictional detective$" at 7
+- node2 sends message with id=1 and content="$created by British author/$ Sir Arthur Conan Doyle.$" at 7.2 with duplication
+- node2 sends message with id=1 and content="$created by British author/$ Sir Arthur Conan Doyle.$" at 7.21 with duplication
+- node3 received message with id=1 and content="$created by British author/$ Sir Arthur Conan Doyle.$" at 7.2
+- node3 received message with id=1 and content="$created by British author/$ Sir Arthur Conan Doyle.$" at 7.21
+- node2 timeout for message id=2 at 12.4
+- node2 sends message with id=3 and content="$Holmes is known for his proficiency with observation,$" at 12.4 with no errors
+- node3 received message with id=3 and content="$Holmes is known for his proficiency with observation,$" at 12.4
+- node2 sends message with id=4 and content="$deduction, forensic science,$" at 12.6 with no errors
+- node3 received message with id=4 and content="$deduction, forensic science,$" at 12.6
+- node2 sends message with id=5 and content="$and// logical reasoning/$ that borders on the fantastic,$" at 12.8 with no errors
+- node3 received message with id=5 and content="$and// logical reasoning/$ that borders on the fantastic,$" at 12.8
+- node2 timeout for message id=6 at 18
+- node2 sends message with id=7 and content="$including Scotland Yard.$" at 18 with no errors
+- node3 received message with id=7 and content="$including Scotland Yard.$" at 18
+- ...................
+- end of input file
+- total transmission time= 11.2
+- total number of transmissions= 16
+- the network throughput= 0.714286

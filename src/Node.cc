@@ -115,7 +115,7 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo, MyMessage_Base
         MyMessage_Base *selfmsg = new MyMessage_Base();
 
         totalNumberOfTransmissions++;
-        nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+        selfmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
         outStream << "- " << getName() << " timeout for message id=" << nmsg->getMsgID() << " at " << simTime() + timeout << endl;
 
         scheduleAt(simTime() + timeout, selfmsg);
@@ -191,19 +191,7 @@ void Node::handleRecieveMsg(int ackNo, int mtype, MyMessage_Base *rmsg)
 
 void Node::initialize()
 {
-    string nodeName = getName();
-    nodeName = nodeName.substr(4, nodeName.length() - 4);
-    // TODO - Generated method body
-    string outputFileName = "../files/Outputs/pair";
-    if (atoi(nodeName.c_str()) % 2 == 0)
-    { //even index
-        outputFileName += nodeName + to_string(atoi(nodeName.c_str()) + 1) + ".txt";
-    }
-    else
-    { //odd
-        outputFileName += to_string((atoi(nodeName.c_str()) - 1)) + nodeName + ".txt";
-    }
-    outStream.open("../files/Outputs/pair01.txt", std::fstream::in | std::fstream::out | std::fstream::app); //file name shouldn't be hard-coded
+
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -211,6 +199,22 @@ void Node::handleMessage(cMessage *msg)
     // TODO - Generated method body
     if (msg->isSelfMessage())
     {
+        if (dataMessages.size() <= Seq_Num)
+        {
+            //TODO: signal the end of Node transmission
+            MyMessage_Base *rmsg = check_and_cast<MyMessage_Base *>(msg);
+
+            outStream << "- ..................." << endl;
+            outStream << "- end of input file" << endl;
+            outStream << "- total transmission time= " << simTime().dbl() - startTime << endl;
+            outStream << "- total number of transmissions= " << totalNumberOfTransmissions + rmsg->getNumberOfTransmissions() << endl;
+            outStream << "- the network throughput= " << dataMessages.size() / (simTime().dbl() - startTime) << endl;
+
+            outStream.close();
+
+            return;
+        }
+
         handleSendMsg(dataMessages[Seq_Num], Seq_Num, check_and_cast<MyMessage_Base *>(msg));
         //then increment the seq. num. (msgID)
         Seq_Num++;
@@ -220,7 +224,21 @@ void Node::handleMessage(cMessage *msg)
         MyMessage_Base *rmsg = check_and_cast<MyMessage_Base *>(msg);
         int initTime = rmsg->getMsgID();
         if (rmsg->getM_Type() == -1 && initTime != -1)
-        { //sender sent from coordinator
+        { //node sent from coordinator
+            string nodeName = getName();
+            nodeName = nodeName.substr(4, nodeName.length() - 4);
+            // TODO - Generated method body
+            string outputFileName = "../files/Outputs/pair";
+            if (atoi(nodeName.c_str()) % 2 == 0)
+            { //even index
+                outputFileName += nodeName + to_string(atoi(nodeName.c_str()) + 1) + ".txt";
+            }
+            else
+            { //odd
+                outputFileName += to_string((atoi(nodeName.c_str()) - 1)) + nodeName + ".txt";
+            }
+            outStream.open(outputFileName, std::fstream::in | std::fstream::out | std::fstream::app); //file name shouldn't be hard-coded
+
             MyMessage_Base *selfmsg = new MyMessage_Base();
             selfmsg->setM_Payload(rmsg->getM_Payload()); //TODO: read file and save it in a vector
 
@@ -333,6 +351,22 @@ void Node::handleMessage(cMessage *msg)
                     cout << "At Receiver(discarded) : at time = " << rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
                 }
             }
+        }
+        else //receiver from coordinator
+        {
+            string nodeName = getName();
+            nodeName = nodeName.substr(4, nodeName.length() - 4);
+            // TODO - Generated method body
+            string outputFileName = "../files/Outputs/pair";
+            if (atoi(nodeName.c_str()) % 2 == 0)
+            { //even index
+                outputFileName += nodeName + to_string(atoi(nodeName.c_str()) + 1) + ".txt";
+            }
+            else
+            { //odd
+                outputFileName += to_string((atoi(nodeName.c_str()) - 1)) + nodeName + ".txt";
+            }
+            outStream.open(outputFileName, std::fstream::in | std::fstream::out | std::fstream::app); //file name shouldn't be hard-coded
         }
     }
 }
