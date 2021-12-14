@@ -32,6 +32,27 @@ void Node::fillSendData(string path)
     file.close();
 }
 
+// This function calculates the CRC given the msg after being converted to bits and the generator
+// and returns the reminder of their division
+bits Node::calculateCRC(string msg_in_bits, bitset<8> generator_function){
+    int size = msg_in_bits.size() - 8;
+    string rem = msg_in_bits.substr(0,7);
+
+    // In each iteration, the rem window is shifted by one bit and then is divided by the generator
+    for(int i = 0; i <= size; i++){
+        if(i != 0){
+            rem = rem.substr(1) + msg_in_bits[i+7];
+        }
+        if(rem[0] == '1'){
+            bitset<8> temp_rem(rem);
+            rem = (temp_rem ^ generator_function).to_string();
+        }
+
+    }
+    bitset<8> rem_in_bits(rem);
+    return rem_in_bits;
+}
+
 void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
 {
     string errorBits = msgPair.first;
@@ -44,19 +65,31 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
     nmsg->setM_Type(0); // 0 -> Data
     nmsg->setSendingTime(simTime().dbl());
     string newMsgText = "";
+    string msg_in_bits = "";
 
+    // Byte stuffing with start and end flag + Converting the string into bits stream
     int no_of_itr = msgText.size();
-
+    bitset<8> start_byte('$');
+    msg_in_bits += start_byte.to_string();
     for(int i = -1; i < no_of_itr-1; i++){
         if(msgText[i + 1] == '$' || msgText[i + 1] == '/'){
             newMsgText += '/' ;
+            bitset<8> temp('/');
+            msg_in_bits += temp.to_string();
         }
+        bitset<8> temp( msgText[i + 1] );
+        msg_in_bits += temp.to_string();
         newMsgText += msgText[i + 1];
     }
-    msgText = "$" + newMsgText + "$";
-    cout <<"After Byte Stuffing:"<< msgText<<endl;
+    msg_in_bits += start_byte.to_string();
 
-    std::bitset<8> generator_bits(generator);
+    msgText = "$" + newMsgText + "$";
+    msg_in_bits += "0000000";
+
+    //Set the CRC of the msg
+    bitset<8> generator_bits(generator);
+    bitset<8> crc = calculateCRC( msg_in_bits, generator_bits);
+    nmsg->setCrc(crc);
 
     if(errorBits[0] =='1') //modification
     {
@@ -97,19 +130,20 @@ void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
         dupmsg->setM_Payload(msgText.c_str());
         sendDelayed(dupmsg,delay+ 0.01, "out");
     }
-
-    bitset<8> temp(msgText[0]);
-    //cout<< (temp^generator_bits).to_string()<<endl;
-
-
 }
 
-void Node::handleRecieveMsg(int ackNo)
+void Node::handleRecieveMsg(int ackNo, int mtype)
 {
+    string ack = "";
+    if( mtype == 2){
+        ack = "NACK";
+    }else {
+        ack = "ACK";
+    }
     MyMessage_Base* nmsg= new MyMessage_Base();
-    nmsg->setM_Payload("ACK");
+    nmsg->setM_Payload(ack.c_str());
     nmsg->setPiggyBackingID(ackNo);
-    nmsg->setM_Type(1); // 1 -> ACK
+    nmsg->setM_Type(mtype); // 1 -> ACK , 2 -> NACK
     nmsg->setSendingTime(simTime().dbl()+0.2);
     sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
 }
@@ -166,9 +200,19 @@ void Node::handleMessage(cMessage *msg)
            else {
                string msg_recieved = rmsg->getM_Payload();
                string temp_byte_stuffing = "";
+               string msg_in_bits = "";
+
+               bitset<8> generator_bits(generator);
                int no_of_itr = msg_recieved.size();
+               // a boolean that is set if the previous character was an esc
+               // to prevent the esc of every esc in the string
                bool is_esc = false;
+               bitset<8> start_byte(msg_recieved[0]);
+               msg_in_bits += start_byte.to_string();
+               // Remove the byte stuffing and converting the string to bits
                for(int i = 1; i < no_of_itr-1; i++){
+                   bitset<8> temp(msg_recieved[i]);
+                   msg_in_bits += temp.to_string();
                    if(msg_recieved[i] != '/' ){
                        temp_byte_stuffing += msg_recieved[i] ;
                    }else if(msg_recieved[i] == '/' && is_esc){
@@ -178,19 +222,31 @@ void Node::handleMessage(cMessage *msg)
                    else{
                        is_esc = true;
                    }
-
                }
-               cout <<"Removing the ByteStuffing: "<< temp_byte_stuffing<<endl;
+               bitset<8> end_byte(msg_recieved[0]);
+               msg_in_bits += end_byte.to_string() + rmsg->getCrc().to_string().substr(1);
+
+               // Recalculating the CRC of the received msg
+               bitset<8> crc = calculateCRC( msg_in_bits, generator_bits);
+               bitset<8> zeros("00000000");
+
+               //check if any error happened in the transmission (by the rem of the CRC)
+               int mtype = 0;
+               if(crc == zeros){
+                   mtype = 1;
+               }else{
+                   mtype = 2;
+               }
 
                if(Ack_Num <= rmsg->getMsgID()) //less than for Lost case!
                {
                    Ack_Num = rmsg->getMsgID()+1;
-                   handleRecieveMsg(Ack_Num);
+                   handleRecieveMsg(Ack_Num, mtype);
                    //put that in file
                    cout <<"At Receiver: at time = "<< rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
                }
                else { //discard this frame (not proceeded to Network layer)
-                   handleRecieveMsg(Ack_Num);
+                   handleRecieveMsg(Ack_Num, mtype);
                    cout <<"At Receiver(discarded) : at time = "<< rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
                }
            }

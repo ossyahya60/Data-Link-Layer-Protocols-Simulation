@@ -34,13 +34,14 @@ public:
     int Seq_Num = 0;
     int Ack_Num = 0;
     bool isSender = false;
-    string generator = "111001";
+    string generator = "11110111";
     vector<pair<string, string>> dataMessages;
 
     //helper functions:
     void fillSendData(string path);
     void handleSendMsg(pair<string, string>,int);
-    void handleRecieveMsg(int);
+    void handleRecieveMsg(int, int);
+    bitset<8> calculateCRC(string, bitset<8>);
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
