@@ -1,7 +1,7 @@
-- node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3 with modification, duplication
-- node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3.01 with modification, duplication
-- node1 received message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3
-- node1 received message with id=0 and content="$A flower, sometimes known as a bloom or jlossom$" at 3.01
+- node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or blossor$" at 3 with modification, duplication
+- node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or blossor$" at 3.01 with modification, duplication
+- node1 received message with id=0 and content="$A flower, sometimes known as a bloom or blossor$" at 3
+- node1 received message with id=0 and content="$A flower, sometimes known as a bloom or blossor$" at 3.01
 - node0 sends message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" at 3.2 with no errors
 - node1 received message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" at 3.2
 - node0 timeout for message id=2 at 8.4

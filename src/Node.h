@@ -3,15 +3,15 @@
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 #ifndef __SECTION1_NODE_H_
 #define __SECTION1_NODE_H_
@@ -36,16 +36,18 @@ public:
     int Ack_Num = 0;
     bool isSender = false;
     double startTime = 0;
-    string generator = "111001";
+    string generator = "11110111";
     vector<pair<string, string>> dataMessages;
     std::fstream outStream;
     int totalNumberOfTransmissions = 0;
 
     //helper functions:
     void fillSendData(string path);
-    void handleSendMsg(pair<string, string>,int, MyMessage_Base*);
-    void handleRecieveMsg(int, MyMessage_Base*);
-  protected:
+    void handleSendMsg(pair<string, string>, int, MyMessage_Base *);
+    void handleRecieveMsg(int, int, MyMessage_Base *);
+    bitset<8> calculateCRC(string, bitset<8>);
+
+protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
 };
