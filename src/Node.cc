@@ -43,6 +43,21 @@ void Node::handleSendMsg(pair<string, string> msgPair)
     nmsg->setMsgID(Seq_Num);
     nmsg->setM_Type(0); // 0 -> Data
     nmsg->setSendingTime(simTime().dbl());
+    cout << msgText<<msgText.size()<<endl;
+    string newMsgText = "";
+
+    int no_of_itr = msgText.size();
+
+    for(int i = -1; i < no_of_itr-1; i++){
+        if(msgText[i + 1] == '$' || msgText[i + 1] == '/'){
+            newMsgText += '/' ;
+        }
+        newMsgText += msgText[i + 1];
+    }
+    msgText = "$" + newMsgText + "$";
+    cout <<"After Byte Stuffing:"<< msgText<<endl;
+
+    std::bitset<8> generator_bits(generator);
 
     if(errorBits[0] =='1') //modification
     {
@@ -80,6 +95,11 @@ void Node::handleSendMsg(pair<string, string> msgPair)
         dupmsg->setM_Payload(msgText.c_str());
         sendDelayed(dupmsg,delay+ 0.01, "out");
     }
+
+    bitset<8> temp(msgText[0]);
+    cout<< (temp^generator_bits).to_string()<<endl;
+
+
 }
 
 void Node::handleRecieveMsg()
@@ -134,6 +154,24 @@ void Node::handleMessage(cMessage *msg)
 
            }
            else {
+               string msg_recieved = rmsg->getM_Payload();
+               string temp_byte_stuffing = "";
+               int no_of_itr = msg_recieved.size();
+               bool is_esc = false;
+               for(int i = 1; i < no_of_itr-1; i++){
+                   if(msg_recieved[i] != '/' ){
+                       temp_byte_stuffing += msg_recieved[i] ;
+                   }else if(msg_recieved[i] == '/' && is_esc){
+                       temp_byte_stuffing += msg_recieved[i] ;
+                       is_esc = false;
+                   }
+                   else{
+                       is_esc = true;
+                   }
+
+               }
+               cout <<"Removing the ByteStuffing: "<< temp_byte_stuffing<<endl;
+
                //if(Ack_Num == rmsg->getMsgID() + 1)
                //{
                    MyMessage_Base* nmsg= new MyMessage_Base();
@@ -141,6 +179,7 @@ void Node::handleMessage(cMessage *msg)
                    //Ack_Num = rmsg->getMsgID() + 1;
                    nmsg->setMsgID(++Ack_Num);
                    nmsg->setM_Type(1); // 1 -> ACK
+
                    sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
                //} //else discard
            }

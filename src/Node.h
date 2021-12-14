@@ -34,6 +34,7 @@ public:
     int Seq_Num = 0;
     int Ack_Num = 0;
     bool isSender = false;
+    string generator = "111001";
     vector<pair<string, string>> dataMessages;
 
     //helper functions:
