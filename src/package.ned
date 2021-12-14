@@ -6,6 +6,10 @@ package section1;
 //
 network Network
 {
+    double delay;
+    int timeout;
+    int windowsize;
+    
     @display("bgb=619,254");
     submodules:
         coordinator: Coordinator {
