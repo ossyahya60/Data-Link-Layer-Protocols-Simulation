@@ -38,8 +38,8 @@ public:
 
     //helper functions:
     void fillSendData(string path);
-    void handleSendMsg(pair<string, string>);
-    void handleRecieveMsg();
+    void handleSendMsg(pair<string, string>,int);
+    void handleRecieveMsg(int);
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);

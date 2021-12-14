@@ -32,7 +32,7 @@ void Node::fillSendData(string path)
     file.close();
 }
 
-void Node::handleSendMsg(pair<string, string> msgPair)
+void Node::handleSendMsg(pair<string, string> msgPair, int seqNo)
 {
     string errorBits = msgPair.first;
     string msgText = msgPair.second;
@@ -40,7 +40,7 @@ void Node::handleSendMsg(pair<string, string> msgPair)
     bool duplicated = false;
     //new msg for sending:
     MyMessage_Base* nmsg= new MyMessage_Base();
-    nmsg->setMsgID(Seq_Num);
+    nmsg->setMsgID(seqNo);
     nmsg->setM_Type(0); // 0 -> Data
     nmsg->setSendingTime(simTime().dbl());
 
@@ -52,7 +52,10 @@ void Node::handleSendMsg(pair<string, string> msgPair)
     if(errorBits[1] =='1') //loss
     {
         //handle loss -> put on log file only:
-
+        cout <<"Lost message: at time = "<< simTime().dbl() << " : " << msgText << " - " << seqNo << endl;
+        int timeout=5;//getParentModule()->par("timeout").intValue();
+        MyMessage_Base* selfmsg= new MyMessage_Base();
+        scheduleAt(simTime() + timeout, selfmsg);
         return;
     }
     if(errorBits[2] =='1') //duplication
@@ -61,33 +64,36 @@ void Node::handleSendMsg(pair<string, string> msgPair)
     }
     if(errorBits[3] =='1') //delay
     {
-        //delay = par("delay").doubleValue(); //get it from .ini file
+        //delay = getParentModule()->par("delay").doubleValue(); //get it from .ini file
         //cout << "Delay: " << delay << endl;
         delay = 3.0;
     }
 
     nmsg->setM_Payload(msgText.c_str());
-    if(delay>0)
+    if(delay>0){
+        nmsg->setSendingTime(simTime().dbl()+ delay);
         sendDelayed(nmsg, delay, "out");
+    }
     else
         send(nmsg, "out");
 
     if (duplicated){
         MyMessage_Base* dupmsg = new MyMessage_Base();
-        dupmsg->setMsgID(Seq_Num);
+        dupmsg->setMsgID(seqNo);
         dupmsg->setM_Type(0); // 0 -> Data
-        dupmsg->setSendingTime(simTime().dbl());
+        dupmsg->setSendingTime(simTime().dbl()+delay+ 0.01);
         dupmsg->setM_Payload(msgText.c_str());
         sendDelayed(dupmsg,delay+ 0.01, "out");
     }
 }
 
-void Node::handleRecieveMsg()
+void Node::handleRecieveMsg(int ackNo)
 {
     MyMessage_Base* nmsg= new MyMessage_Base();
     nmsg->setM_Payload("ACK");
-    nmsg->setMsgID(++Seq_Num);
+    nmsg->setPiggyBackingID(ackNo);
     nmsg->setM_Type(1); // 1 -> ACK
+    nmsg->setSendingTime(simTime().dbl()+0.2);
     sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
 }
 
@@ -100,8 +106,8 @@ void Node::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
     if (msg->isSelfMessage()){
-        handleSendMsg(dataMessages[Seq_Num]);
-        //increment the seq. num. (msgID)
+        handleSendMsg(dataMessages[Seq_Num], Seq_Num);
+        //then increment the seq. num. (msgID)
         Seq_Num++;
     }
     else{
@@ -119,30 +125,39 @@ void Node::handleMessage(cMessage *msg)
            scheduleAt(startTime - simTime(), selfmsg);
        }
        else if (rmsg->getM_Type() != -1){ //msg from node (a peer)
-           cout << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
+
            if (isSender) {
 
-               if(dataMessages.size() <= Seq_Num)
+               if(dataMessages.size() <= Seq_Num){
+                   cout <<"At Sender: at time = "<< rmsg->getSendingTime() << " : "<< rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << " but we are DONE!!" << endl;
                    //TODO: signal the end of Node transmission
                    return;
-               //if (Seq_Num == rmsg->getMsgID()){
-                   //Seq_Num = rmsg->getMsgID();
-                   handleSendMsg(dataMessages[Seq_Num]);
-                   //increment the seq. num. (msgID)
+               }
+
+               if (Seq_Num == rmsg->getPiggyBackingID()){
+                   //put that in the file
+                   cout <<"At Sender: at time = "<< rmsg->getSendingTime() << " : "<< rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << endl;
+                   handleSendMsg(dataMessages[Seq_Num], Seq_Num);
+                   //then increment the seq. num. (msgID)
                    Seq_Num++;
-               //} //else discard
+               }
+               else { //discard this ACK!
+                   cout <<"At Sender(discarded): at time = "<< rmsg->getSendingTime() << " : "<< rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << endl;
+               }
 
            }
            else {
-               //if(Ack_Num == rmsg->getMsgID() + 1)
-               //{
-                   MyMessage_Base* nmsg= new MyMessage_Base();
-                   nmsg->setM_Payload("ACK");
-                   //Ack_Num = rmsg->getMsgID() + 1;
-                   nmsg->setMsgID(++Ack_Num);
-                   nmsg->setM_Type(1); // 1 -> ACK
-                   sendDelayed(nmsg, 0.2, "out"); //TODO: handle delay time correctly
-               //} //else discard
+               if(Ack_Num <= rmsg->getMsgID()) //less than for Lost case!
+               {
+                   Ack_Num = rmsg->getMsgID()+1;
+                   handleRecieveMsg(Ack_Num);
+                   //put that in file
+                   cout <<"At Receiver: at time = "<< rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
+               }
+               else { //discard this frame (not proceeded to Network layer)
+                   handleRecieveMsg(Ack_Num);
+                   cout <<"At Receiver(discarded) : at time = "<< rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getMsgID() << endl;
+               }
            }
        }
     }
