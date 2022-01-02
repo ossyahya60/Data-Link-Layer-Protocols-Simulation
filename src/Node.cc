@@ -16,6 +16,7 @@
 #include "Node.h"
 #include "MyMessage_m.h"
 Define_Module(Node);
+#define propagationDelay 0.2
 
 void Node::fillSendData(string path)
 {
@@ -63,12 +64,12 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
     string msgText = msgPair.second;
     double delay = 0;
     bool duplicated = false;
+    bool lose = false;
     //new msg for sending:
     MyMessage_Base *nmsg = new MyMessage_Base();
     nmsg->setMsgID(seqNo);
     nmsg->setPiggyBackingID(rmsg->getPiggyBackingID());
     nmsg->setM_Type(0); // 0 -> Data
-    nmsg->setSendingTime(simTime().dbl());
     string newMsgText = "";
     nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
     string msg_in_bits = "";
@@ -110,17 +111,7 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
     if (errorBits[1] == '1') //loss
     {
         errors += errors.length() > 0 ? ", loss" : "loss";
-        //handle loss -> put on log file only:
-        cout << "Lost message: at time = " << simTime().dbl() << " : " << msgText << " - " << seqNo << endl;
-        int timeout = getParentModule()->par("timeout").intValue();
-        MyMessage_Base *selfmsg = new MyMessage_Base();
-
-        totalNumberOfTransmissions++;
-        selfmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
-        outStream << "- " << getName() << " timeout for message id=" << nmsg->getMsgID() << " at " << simTime() + timeout << endl;
-
-        scheduleAt(simTime() + timeout, selfmsg);
-        return;
+        loss =true;
     }
     if (errorBits[2] == '1') //duplication
     {
@@ -136,25 +127,43 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
     nmsg->setM_Payload(msgText.c_str());
 
     totalNumberOfTransmissions++;
-    nmsg->setSendingTime(simTime().dbl() + delay + betweenFramesDelay + 0.2);
+
+    if(loss){
+        //MyMessage_Base *selfmsg = new MyMessage_Base();
+        //selfmsg->setM_Payload("Lost!");
+        //selfmsg->setSendingTime(simTime().dbl() + delay + betweenFramesDelay + propagationDelay);
+        //selfmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+        outStream << "- " << getName() << " timeout for message id=" << nmsg->getMsgID() << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << endl;
+        cout << getName() << " lost for message id=" << nmsg->getMsgID() << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << endl;
+        //scheduleAt(simTime().dbl() + delay + betweenFramesDelay + propagationDelay, selfmsg);
+
+
+        //as if we send the next frame - and this frame is lost:
+        /*Seq_Num++;
+        nmsg->setMsgID(Seq_Num);
+        msgText = dataMessages[Seq_Num];
+        seqNo=Seq_Num;
+        delay+=0.05;*/
+    }
+    nmsg->setSendingTime(simTime().dbl() + delay + betweenFramesDelay + propagationDelay);
     nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
     outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\""
-              << " at " << simTime() + delay + betweenFramesDelay + 0.2 << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
-    sendDelayed(nmsg, 0.2+delay +betweenFramesDelay, "out");
+              << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
+    sendDelayed(nmsg, propagationDelay+delay +betweenFramesDelay, "out");
 
 
-    if (duplicated)
+    if (duplicated) /*&& !lost)*/ //8aleban hanfkes ll duplication if msg was lost
     {
         MyMessage_Base *dupmsg = new MyMessage_Base();
         dupmsg->setMsgID(seqNo);
         dupmsg->setM_Type(0); // 0 -> Data
-        dupmsg->setSendingTime(simTime().dbl() + delay + 0.01 + betweenFramesDelay + 0.2);
+        dupmsg->setSendingTime(simTime().dbl() + delay + 0.01 + betweenFramesDelay + propagationDelay);
         dupmsg->setM_Payload(msgText.c_str());
         totalNumberOfTransmissions++;
         nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
         outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\""
-                  << " at " << simTime() + delay + betweenFramesDelay + 0.2 + 0.01 << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
-        sendDelayed(dupmsg, 0.2 + delay + 0.01 + betweenFramesDelay, "out");
+                  << " at " << simTime() + delay + betweenFramesDelay + propagationDelay + 0.01 << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
+        sendDelayed(dupmsg, propagationDelay + delay + 0.01 + betweenFramesDelay, "out");
     }
 }
 
@@ -163,12 +172,12 @@ void Node::handleACK(int ackNo, int mtype, MyMessage_Base *rmsg)
     rmsg->setPiggyBackingID(ackNo);
     //cout << "Piggypack" <<endl
     rmsg->setM_Type(mtype); // 1 -> ACK , 2 -> NACK
-    rmsg->setSendingTime(simTime().dbl() + 0.2);
+    rmsg->setSendingTime(simTime().dbl() + propagationDelay);
     totalNumberOfTransmissions++;
     rmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
     outStream << "- " << getName() << " received message with id=" << rmsg->getMsgID() << " and content=\"" << rmsg->getM_Payload() << "\""
               << " at " << simTime() << endl;
-    //sendDelayed(nmsg, 0.2, "out");
+    //sendDelayed(nmsg, propagationDelay, "out");
 }
 
 void Node::initialize()
@@ -189,7 +198,7 @@ void Node::handleMessage(cMessage *msg)
         cout << getName() << " will start sending:" <<endl;
         MyMessage_Base* rmsg = check_and_cast<MyMessage_Base *>(msg);
         Ack_Num = rmsg->getPiggyBackingID();
-        Rn = rmsg->getMsgID();
+        Rn = Ack_Num;
         handleACK(Ack_Num, 1, rmsg);
         if (dataMessages.size() <= Seq_Num)
         {
@@ -203,7 +212,7 @@ void Node::handleMessage(cMessage *msg)
             totalNumberOfTransmissions++;
             rmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
             rmsg->setM_Payload("Finish");
-            sendDelayed(rmsg,0.2, "out");
+            sendDelayed(rmsg,propagationDelay, "out");
             return;
         }
         for(int i=0; i<windowSize; ++i){ //only for first time:
@@ -316,8 +325,8 @@ void Node::handleMessage(cMessage *msg)
             {
                 mtype = 2;
             }
-            Rn = rmsg->getMsgID()+1;
-            Ack_Num = Rn;
+            Ack_Num = rmsg->getMsgID()+1;
+            Rn = Ack_Num;
             handleACK(Ack_Num, mtype, newmsg);
 
             /*if (Ack_Num <= rmsg->getMsgID()) //less than for Lost case!
@@ -361,7 +370,7 @@ void Node::handleMessage(cMessage *msg)
                 totalNumberOfTransmissions++;
                 newmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
                 newmsg->setM_Payload("Finish");
-                sendDelayed(newmsg,0.2, "out");
+                sendDelayed(newmsg,propagationDelay, "out");
                 return;
             }
 
@@ -375,7 +384,7 @@ void Node::handleMessage(cMessage *msg)
 
                 cout << Seq_Num<< " - " << rmsg->getPiggyBackingID() << endl;
             }*/
-            Sf = Ack_Num; //start of frame
+            Sf = rmsg->getPiggyBackingID(); //start of frame
             Sn = Seq_Num;
 
             //printing:
