@@ -26,6 +26,7 @@
 using namespace std;
 using namespace omnetpp;
 
+
 /**
  * TODO - Generated class
  */
@@ -34,17 +35,23 @@ class Node : public cSimpleModule
 public:
     int Seq_Num = 0;
     int Ack_Num = 0;
-    bool isSender = false;
+    bool startNode = false;
     double startTime = 0;
     string generator = "11110111";
     vector<pair<string, string>> dataMessages;
     std::fstream outStream;
     int totalNumberOfTransmissions = 0;
 
+    //for Selective Repeat protocol:
+    int Sf = 0;// start of sending frame
+    int Sn = 0;// sending frame number
+    int Rn = 0;// receiving frame number
+    vector<bool> arrived;
+
     //helper functions:
     void fillSendData(string path);
-    void handleSendMsg(pair<string, string>, int, MyMessage_Base *);
-    void handleRecieveMsg(int, int, MyMessage_Base *);
+    void handleData(pair<string, string>, int, MyMessage_Base *,double);
+    void handleACK(int, int, MyMessage_Base *);
     bitset<8> calculateCRC(string, bitset<8>);
 
 protected:

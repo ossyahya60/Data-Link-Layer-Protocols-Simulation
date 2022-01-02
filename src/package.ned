@@ -8,7 +8,7 @@ network Network
 {
     double delay;
     int timeout;
-    int windowsize;
+    int windowSize;
     
     @display("bgb=619,254");
     submodules:
