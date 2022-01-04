@@ -58,20 +58,21 @@ bits Node::calculateCRC(string msg_in_bits, bitset<8> generator_function)
     return rem_in_bits;
 }
 
-void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *rmsg, double betweenFramesDelay)
+void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *rmsg, double betweenFramesDelay, bool receivedNACK)
 {
     string errorBits = msgPair.first;
     string msgText = msgPair.second;
     double delay = 0;
     bool duplicated = false;
-    bool lose = false;
     //new msg for sending:
     MyMessage_Base *nmsg = new MyMessage_Base();
     nmsg->setMsgID(seqNo);
     nmsg->setPiggyBackingID(rmsg->getPiggyBackingID());
-    nmsg->setM_Type(0); // 0 -> Data
-    string newMsgText = "";
+    nmsg->setM_Type(rmsg->getM_Type());
     nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+
+
+    string newMsgText = "";
     string msg_in_bits = "";
 
     // Byte stuffing with start and end flag + Converting the string into bits stream
@@ -102,23 +103,25 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
 
     string errors = "";
 
-    if (errorBits[0] == '1') //modification
+    if (!receivedNACK && errorBits[0] == '1') //modification
     {
         errors += errors.length() > 0 ? ", modification" : "modification";
         int randChar = std::rand() % msgText.length(); // get random index of text message to error it
         msgText[randChar] += (std::rand() % 10) + 1;
     }
-    if (errorBits[1] == '1') //loss
+    if (!receivedNACK && errorBits[1] == '1') //loss
     {
         errors += errors.length() > 0 ? ", loss" : "loss";
-        loss =true;
+        outStream << "- " << getName() << " loss the frame with message id=" << nmsg->getMsgID() << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << endl;
+        cout << getName() << " lost for message id=" << nmsg->getMsgID() << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << endl;
+        return;
     }
-    if (errorBits[2] == '1') //duplication
+    if (!receivedNACK && errorBits[2] == '1') //duplication
     {
         errors += errors.length() > 0 ? ", duplication" : "duplication";
         duplicated = true;
     }
-    if (errorBits[3] == '1') //delay
+    if (!receivedNACK && errorBits[3] == '1') //delay
     {
         errors += errors.length() > 0 ? ", delay" : "delay";
         delay = getParentModule()->par("delay").doubleValue(); //get it from .ini file
@@ -128,27 +131,10 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
 
     totalNumberOfTransmissions++;
 
-    if(loss){
-        //MyMessage_Base *selfmsg = new MyMessage_Base();
-        //selfmsg->setM_Payload("Lost!");
-        //selfmsg->setSendingTime(simTime().dbl() + delay + betweenFramesDelay + propagationDelay);
-        //selfmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
-        outStream << "- " << getName() << " timeout for message id=" << nmsg->getMsgID() << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << endl;
-        cout << getName() << " lost for message id=" << nmsg->getMsgID() << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << endl;
-        //scheduleAt(simTime().dbl() + delay + betweenFramesDelay + propagationDelay, selfmsg);
-
-
-        //as if we send the next frame - and this frame is lost:
-        /*Seq_Num++;
-        nmsg->setMsgID(Seq_Num);
-        msgText = dataMessages[Seq_Num];
-        seqNo=Seq_Num;
-        delay+=0.05;*/
-    }
     nmsg->setSendingTime(simTime().dbl() + delay + betweenFramesDelay + propagationDelay);
     nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
     outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\""
-              << " at " << simTime() + delay + betweenFramesDelay + propagationDelay << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
+              << " to " << simTime() + delay + betweenFramesDelay + propagationDelay << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
     sendDelayed(nmsg, propagationDelay+delay +betweenFramesDelay, "out");
 
 
@@ -156,13 +142,13 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
     {
         MyMessage_Base *dupmsg = new MyMessage_Base();
         dupmsg->setMsgID(seqNo);
-        dupmsg->setM_Type(0); // 0 -> Data
+        dupmsg->setM_Type(nmsg->getM_Type()); // 0 -> Data
         dupmsg->setSendingTime(simTime().dbl() + delay + 0.01 + betweenFramesDelay + propagationDelay);
         dupmsg->setM_Payload(msgText.c_str());
         totalNumberOfTransmissions++;
         nmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
         outStream << "- " << getName() << " sends message with id=" << nmsg->getMsgID() << " and content=\"" << nmsg->getM_Payload() << "\""
-                  << " at " << simTime() + delay + betweenFramesDelay + propagationDelay + 0.01 << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
+                  << " to " << simTime() + delay + betweenFramesDelay + propagationDelay + 0.01 << " with " << ((errors.length() > 0) ? errors : "no errors") << endl;
         sendDelayed(dupmsg, propagationDelay + delay + 0.01 + betweenFramesDelay, "out");
     }
 }
@@ -175,8 +161,12 @@ void Node::handleACK(int ackNo, int mtype, MyMessage_Base *rmsg)
     rmsg->setSendingTime(simTime().dbl() + propagationDelay);
     totalNumberOfTransmissions++;
     rmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
-    outStream << "- " << getName() << " received message with id=" << rmsg->getMsgID() << " and content=\"" << rmsg->getM_Payload() << "\""
-              << " at " << simTime() << endl;
+    string pload = rmsg->getM_Payload();
+    if(pload != "Finish"){
+        outStream << "- " << getName() << " received message with id=" << rmsg->getMsgID() << " and content=\"" << pload << "\""
+                                          << " at " << simTime() << endl;
+    }
+
     //sendDelayed(nmsg, propagationDelay, "out");
 }
 
@@ -187,10 +177,12 @@ void Node::initialize()
     for(int i=0; i<windowSize; ++i){
         arrived.push_back(false);
     }
+
 }
 
 void Node::handleMessage(cMessage *msg)
 {
+    //TODO: if I've finished make we can choose if using default windowSize or calculated windowSize from dataMessages:
     int windowSize = getParentModule()->par("windowSize").intValue();
     // TODO - Generated method body
     if (msg->isSelfMessage())
@@ -200,15 +192,25 @@ void Node::handleMessage(cMessage *msg)
         Ack_Num = rmsg->getPiggyBackingID();
         Rn = Ack_Num;
         handleACK(Ack_Num, 1, rmsg);
+
         if (dataMessages.size() <= Seq_Num)
         {
+            //TODO: signal the end of Node transmission
+
             string str = rmsg->getM_Payload();
-            if(str == "Finished")//other node send "Finish" as a terminating flag (both now finished)
+            if(str == "Finish")//other node send "Finish" as a terminating flag (both now finished)
             {
                 cout << "We are DONE!!" <<endl;
-                endSimulation();
+                outStream << "- ..................." << endl;
+                outStream << "- " <<getName()<< " end of input file" << endl;
+                outStream << "- total transmission time= " << simTime().dbl() - startTime << endl;
+                outStream << "- total number of transmissions= " << totalNumberOfTransmissions + rmsg->getNumberOfTransmissions() << endl;
+                outStream << "- the network throughput= " << dataMessages.size() / (simTime().dbl() - startTime) << endl;
+                outStream.close();
+                //endSimulation();
+                return;
             }
-
+            outStream <<"- " << getName() << " received message with id " <<rmsg->getMsgID() << " " << str <<" At "<< rmsg->getSendingTime() <<endl;
             totalNumberOfTransmissions++;
             rmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
             rmsg->setM_Payload("Finish");
@@ -216,18 +218,18 @@ void Node::handleMessage(cMessage *msg)
             return;
         }
         for(int i=0; i<windowSize; ++i){ //only for first time:
-
-            handleData(dataMessages[Seq_Num], Seq_Num, rmsg,0.05*i);
+            handleData(dataMessages[Seq_Num], Seq_Num, rmsg,0.05*i,false);
+            sentArr[Seq_Num] = true;
             //then increment the seq. num. (msgID)
             Seq_Num++;
             Sf = Ack_Num; //start of frame
             Sn = Seq_Num;
-
             //printing:
             cout <<getName() << "    <Send Part> -sent frame: "<< to_string(Sn-1)
                  << " Sf=" <<to_string(Sf) << " Sn=" <<to_string(Sn) << " sent ACK: " << rmsg->getPiggyBackingID()
                  << "    <Recv Part> Rn=" <<to_string(Rn)<< " At "<< simTime()+0.05*i <<endl;
         }
+
     }
     else
     {
@@ -250,6 +252,10 @@ void Node::handleMessage(cMessage *msg)
             //process input file
             string fileName = rmsg->getM_Payload();
             fillSendData("../files/inputs/" + fileName);
+            int dataSize = dataMessages.size();
+            for(int i=0; i<dataSize; ++i){
+                sentArr.push_back(false);
+            }
             //
         }
 
@@ -314,20 +320,55 @@ void Node::handleMessage(cMessage *msg)
             // Recalculating the CRC of the received msg
             bitset<8> crc = calculateCRC(msg_in_bits, generator_bits);
             bitset<8> zeros("00000000");
-
             //check if any error happened in the transmission (by the rem of the CRC)
-            int mtype = 0;
-            if (crc == zeros)
+            int mtype = (crc == zeros) ? 1 : 2;
+
+            //check for receiving:
+            if(Rn == rmsg->getMsgID())//-> correct; what I am expecting
             {
-                mtype = 1;
+                //send data normal with its ack
+                arrived[rmsg->getMsgID()-Rn]=true;
+                for(int k=0; k<windowSize;++k){
+                    if(arrived[k]){
+                        Ack_Num++;
+                        arrived[k]=false;
+                    }
+
+                }
+                //Ack_Num = rmsg->getMsgID()+1;
+                sentNACK =false;
+                Rn = Ack_Num;
+                handleACK(Ack_Num, mtype, newmsg);
             }
-            else
+            else if(Rn < rmsg->getMsgID() && Rn + windowSize > rmsg->getMsgID())// && !sentNACK)//->loss or delay
             {
-                mtype = 2;
+                //send NACK and buffer this frame
+                cout << "Lost/Delay case: Rn= " <<Rn << " - rec msgId= " <<rmsg->getMsgID() <<endl;
+                arrived[rmsg->getMsgID()-Rn]=true;
+                if(!sentNACK)
+                    mtype=2; //NACK
+                sentNACK =true; //send NACK only one time then wait for time=2*betweenFrameDelay before sending another NACK again if needed
+                arrived[rmsg->getMsgID()] = true;
+                Rn = Ack_Num;
+                handleACK(Ack_Num, mtype, newmsg);
             }
-            Ack_Num = rmsg->getMsgID()+1;
-            Rn = Ack_Num;
-            handleACK(Ack_Num, mtype, newmsg);
+            else //->either Rn > msgId received or msgId > Rn and out of Window size of buffer
+            {
+                //discarded
+                string nn = getName();
+                if(rmsg->getMsgID() == 1 && nn=="node2"){
+                    cout << "DUPLICATEEEEEEEEEEEEEE rec node2" << " with msg id = " <<newmsg->getMsgID() <<endl;
+                    cout << "- " << getName() << " received message with id=" << newmsg->getMsgID() << " and content=\"" << newmsg->getM_Payload() << "\""
+                                                      << " at " << simTime() << endl;
+
+                }
+
+
+                //cout << "Discarded case: Rn= " <<Rn << " - rec msgId= " <<rmsg->getMsgID() <<endl;
+                cout <<getName() << " "<<rmsg->getM_Payload() <<" - Discarded!!" <<endl;
+                sentNACK =false;
+            }
+
 
             /*if (Ack_Num <= rmsg->getMsgID()) //less than for Lost case!
             {
@@ -347,11 +388,11 @@ void Node::handleMessage(cMessage *msg)
             ///     Receive ACK -> Send Data     ///
             ////////////////////////////////////////
 
-            if (dataMessages.size() <= Seq_Num)
+            /*if (dataMessages.size() <= Seq_Num)
             {
                 cout << getName() << "    Finish sending!"
                      << "    <Recv Part> Rn=" <<to_string(Rn) <<" At "<< rmsg->getSendingTime() <<endl;
-                /*cout << "At Sender: at time = " << rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << " but we are DONE!!" << endl;
+                cout << "At Sender: at time = " << rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << " but we are DONE!!" << endl;
                 //TODO: signal the end of Node transmission
 
                 outStream << "- ..................." << endl;
@@ -360,7 +401,7 @@ void Node::handleMessage(cMessage *msg)
                 outStream << "- total number of transmissions= " << totalNumberOfTransmissions + rmsg->getNumberOfTransmissions() << endl;
                 outStream << "- the network throughput= " << dataMessages.size() / (simTime().dbl() - startTime) << endl;
 
-                outStream.close();*/
+                outStream.close();
                 string str = rmsg->getM_Payload();
                 if(str == "Finish")//other node send "Finish" as a terminating flag (both now finished)
                 {
@@ -372,27 +413,142 @@ void Node::handleMessage(cMessage *msg)
                 newmsg->setM_Payload("Finish");
                 sendDelayed(newmsg,propagationDelay, "out");
                 return;
-            }
+            }*/
 
-            //if (Seq_Num == rmsg->getPiggyBackingID()){
-                handleData(dataMessages[Seq_Num], Seq_Num, newmsg, rmsg->getSendingTime() - simTime().dbl());
-                //then increment the seq. num. (msgID)
-                Seq_Num++;
-            //}
+            //cout << "mtype of rcv msg = " <<rmsg->getM_Type()<<endl;
+            if (rmsg->getM_Type() == 2){//received NACK
+                cout << "will resend lost frame = " << rmsg->getPiggyBackingID()<<endl;
+                if (dataMessages.size() <= Seq_Num)
+                {
+                    cout << getName() << "    Finish sending!"
+                         << "    <Recv Part> Rn=" <<to_string(Rn) <<" At "<< rmsg->getSendingTime() <<endl;
+                    //cout << "At Sender: at time = " << rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << " but we are DONE!!" << endl;
+
+                    string str = rmsg->getM_Payload();
+                    if(str == "Finish")//other node send "Finish" as a terminating flag (both now finished)
+                    {
+                        cout << "We are DONE!!" <<endl;
+                        //TODO: signal the end of Node transmission
+                        outStream << "- ..................." << endl;
+                        outStream << "- " <<getName()<< " end of input file" << endl;
+                        outStream << "- total transmission time= " << simTime().dbl() - startTime << endl;
+                        outStream << "- total number of transmissions= " << totalNumberOfTransmissions + rmsg->getNumberOfTransmissions() << endl;
+                        outStream << "- the network throughput= " << dataMessages.size() / (simTime().dbl() - startTime) << endl;
+
+                        outStream.close();
+                        //endSimulation();
+                        return;
+                    }
+                    totalNumberOfTransmissions++;
+                    outStream <<"- " << getName() << " received message with id " <<rmsg->getMsgID() << " " << str <<" At "<< rmsg->getSendingTime() <<endl;
+                    newmsg->setM_Payload("Finish");
+                    sendDelayed(newmsg,propagationDelay, "out");
+                    return;
+                }
+                //update ACK_Num
+                cout << "Before ACK_Num : " <<  Ack_Num <<endl;
+                int l=0;
+                while(sentArr[l]){
+                        Ack_Num++;
+                        l++;
+                }
+                Rn = Ack_Num;
+                cout << "After ACK_Num : " <<  Ack_Num <<endl;
+                newmsg->setPiggyBackingID(Ack_Num);
+
+
+                handleData(dataMessages[rmsg->getPiggyBackingID()], rmsg->getPiggyBackingID(), newmsg, rmsg->getSendingTime() - simTime().dbl(),true);
+                sentArr[rmsg->getPiggyBackingID()] = true;
+
+                //Sn = Seq_Num;
+                cout << "resend lost frame"<<endl;
+                //printing:
+                cout << getName() << "    <Send Part> -sent frame: "<< to_string(Sn-1)
+                       << " Sf=" << Sf << " Sn=" << Sn << " sent ACK: " << newmsg->getPiggyBackingID()
+                       << "    <Recv Part> Rn=" << Rn << " rec ACK: " << rmsg->getPiggyBackingID()<<" At "<< rmsg->getSendingTime() <<endl;
+
+            }
+            else{ //postive ACK
+                Sf = rmsg->getPiggyBackingID(); //start of frame.
+//                int j =0;
+//                while(sentArr[j]){
+//                    j++;
+//                }
+                string nodenamee = getName();
+                if(nodenamee == "node5"){
+                    cout << "startframe: " <<Sf <<endl;
+                }
+                /*int j=Sf;
+                while(sentArr[j]){
+                    j++;
+                }
+                Sf = j;*/
+                //send all available in the frame:
+                int dly=0;
+                for(int i=Sf; i<windowSize+Sf; ++i){
+                    if (dataMessages.size() <= Seq_Num)
+                    {
+                        cout << getName() << "    Finish sending!"
+                             << "    <Recv Part> Rn=" <<to_string(Rn) <<" At "<< rmsg->getSendingTime() <<endl;
+                        //cout << "At Sender: at time = " << rmsg->getSendingTime() << " : " << rmsg->getM_Payload() << " - " << rmsg->getPiggyBackingID() << " but we are DONE!!" << endl;
+
+                        string str = rmsg->getM_Payload();
+                        if(str == "Finish")//other node send "Finish" as a terminating flag (both now finished)
+                        {
+                            cout << "We are DONE!!" <<endl;
+                            //check if i closed file dont reclose it:
+
+                            //endSimulation();
+                            outStream <<"- ..................." << endl;
+                            outStream << "- " <<getName() <<" end of input file" << endl;
+                            outStream << "- total transmission time= " << simTime().dbl() - startTime << endl;
+                            outStream << "- total number of transmissions= " << totalNumberOfTransmissions + rmsg->getNumberOfTransmissions() << endl;
+                            outStream << "- the network throughput= " << dataMessages.size() / (simTime().dbl() - startTime) << endl;
+
+                            outStream.close();
+
+                            return;
+                        }
+                        totalNumberOfTransmissions++;
+                        outStream <<"- " << getName() << " received message with id " <<rmsg->getMsgID() << " " << str <<" At "<< rmsg->getSendingTime() <<endl;
+                        newmsg->setNumberOfTransmissions(totalNumberOfTransmissions);
+                        newmsg->setM_Payload("Finish");
+                        sendDelayed(newmsg,propagationDelay, "out");
+                        return;
+                    }
+                    if(sentArr[i]) //was sent before
+                    {
+                        continue;
+                    }
+
+                    handleData(dataMessages[Seq_Num], Seq_Num, newmsg, dly*0.05,false);
+                    if(newmsg->getM_Type() == 2){
+                        newmsg->setM_Type(1);
+                    }
+
+                    sentArr[Seq_Num] = true;
+                    //then increment the seq. num. (msgID)
+                    Seq_Num++;
+
+                    Sn = Seq_Num;
+
+                    //printing:
+                    cout << getName() << "    <Send Part> -sent frame: "<< to_string(Sn-1)
+                           << " Sf=" << Sf << " Sn=" << Sn << " sent ACK: " << newmsg->getPiggyBackingID()
+                           << "    <Recv Part> Rn=" << Rn << " rec ACK: " << rmsg->getPiggyBackingID()<<" At "<< to_string(rmsg->getSendingTime() + dly*0.05) <<endl;
+                    dly++;
+                }
+            }
             /*else
             { //discard this ACK!
 
                 cout << Seq_Num<< " - " << rmsg->getPiggyBackingID() << endl;
             }*/
-            Sf = rmsg->getPiggyBackingID(); //start of frame
-            Sn = Seq_Num;
-
-            //printing:
-            cout << getName() << "    <Send Part> -sent frame: "<< to_string(Sn-1)
-                   << " Sf=" << Sf << " Sn=" << Sn << " sent ACK: " << newmsg->getPiggyBackingID()
-                   << "    <Recv Part> Rn=" << Rn << " rec ACK: " << rmsg->getPiggyBackingID()<<" At "<< rmsg->getSendingTime() <<endl;
 
 
+//            for(int j =0;j<windowSize;++j){
+//                arrived[j]=false;
+//            }
         }
     }
 }

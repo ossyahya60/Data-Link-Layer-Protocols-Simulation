@@ -36,6 +36,7 @@ public:
     int Seq_Num = 0;
     int Ack_Num = 0;
     bool startNode = false;
+    bool sentNACK = false;
     double startTime = 0;
     string generator = "11110111";
     vector<pair<string, string>> dataMessages;
@@ -46,11 +47,11 @@ public:
     int Sf = 0;// start of sending frame
     int Sn = 0;// sending frame number
     int Rn = 0;// receiving frame number
-    vector<bool> arrived;
-
+    vector<bool> arrived; //used to simulate the buffer for arrived frames
+    vector<bool> sentArr;
     //helper functions:
     void fillSendData(string path);
-    void handleData(pair<string, string>, int, MyMessage_Base *,double);
+    void handleData(pair<string, string>, int, MyMessage_Base *,double,bool);
     void handleACK(int, int, MyMessage_Base *);
     bitset<8> calculateCRC(string, bitset<8>);
 
