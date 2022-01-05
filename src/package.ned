@@ -9,6 +9,7 @@ network Network
     double delay;
     int timeout;
     int windowSize;
+    int errorHandle;
     
     @display("bgb=619,254");
     submodules:

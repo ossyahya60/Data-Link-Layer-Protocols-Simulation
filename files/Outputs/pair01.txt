@@ -1,0 +1,380 @@
+- node0 sends message with id=0 and content="'A flower, sometimes known as a bloom or blossom$" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="$(plants of the division Magnoliophyta, also called// angiosperms/$).$" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="$The biological function of a flower is to facilitate reproduction,$" to 3.35 with no errors piggyId = 0
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π167ππ∂∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node0 sends message with id=0 and content="’E	ô±µ› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes knowÓ as `ê167∑∂ê7π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes knowÓ as `ê167∑∂ê7π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node1 received message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" at 3.6 piggyId = 5
+- node1 sends message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" to 3.8 with no errors piggyId = 5
+- node0 received message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" at 3.8 piggyId = 5
+- node0 sends message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" to 4 with no errors piggyId = 5
+- node0 sends message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" to 4.05 with no errors piggyId = 5
+- node1 received message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" at 4 piggyId = 6
+- node1 sends message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" to 4.2 with no errors piggyId = 6
+- node1 sends message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" to 4.25 with no errors piggyId = 6
+- node1 sends message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" to 4.3 with no errors piggyId = 6
+- node1 sends message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" to 4.35 with no errors piggyId = 6
+- node1 received message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" at 4.05 piggyId = 7
+- node0 received message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" at 4.2 piggyId = 6
+- node0 received message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" at 4.25 piggyId = 7
+- node0 received message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" at 4.3 piggyId = 8
+- node0 received message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" at 4.35 piggyId = 9
+- node1 sends message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" to 4.6 with no errors piggyId = 6
+- node1 sends message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" to 4.65 with no errors piggyId = 7
+- node1 sends message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" to 4.7 with no errors piggyId = 8
+- node1 sends message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" to 4.75 with no errors piggyId = 9
+- node0 received message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" at 4.6 piggyId = 10
+- node0 received message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" at 4.65 piggyId = 11
+- node0 received message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" at 4.7 piggyId = 12
+- node0 received message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" at 4.75 piggyId = 13
+- node1 sends message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" to 5 with no errors piggyId = 10
+- node1 sends message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" to 5.05 with no errors piggyId = 11
+- node1 sends message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" to 5.1 with no errors piggyId = 12
+- ...................
+- node1 end of input file
+- total transmission time= 4.95
+- total number of transmissions= 59
+- the network throughput= 3.23232
+- node0 received message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" at 5 piggyId = 14
+- node0 received message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" at 5.05 piggyId = 15
+- node0 received message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" at 5.1 piggyId = 16
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê5π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê5π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.3 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node1 received message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" at 3.6 piggyId = 5
+- node1 sends message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" to 3.8 with no errors piggyId = 5
+- node0 received message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" at 3.8 piggyId = 5
+- node0 sends message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" to 4 with no errors piggyId = 5
+- node0 sends message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" to 4.05 with no errors piggyId = 5
+- node1 received message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" at 4 piggyId = 6
+- node1 sends message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" to 4.2 with no errors piggyId = 6
+- node1 sends message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" to 4.25 with no errors piggyId = 6
+- node1 sends message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" to 4.3 with no errors piggyId = 6
+- node1 sends message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" to 4.35 with no errors piggyId = 6
+- node1 received message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" at 4.05 piggyId = 7
+- node0 received message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" at 4.2 piggyId = 6
+- node0 received message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" at 4.25 piggyId = 7
+- node0 sends message with id=0 and content="≈E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="≈E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π567ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê7π567ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê6π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê167∑∂ê6π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node1 received message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" at 3.6 piggyId = 5
+- node1 sends message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" to 3.8 with no errors piggyId = 5
+- node0 received message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" at 3.8 piggyId = 5
+- node0 sends message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" to 4 with no errors piggyId = 5
+- node0 sends message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" to 4.05 with no errors piggyId = 5
+- node1 received message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" at 4 piggyId = 6
+- node1 sends message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" to 4.2 with no errors piggyId = 6
+- node1 sends message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" to 4.25 with no errors piggyId = 6
+- node1 sends message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" to 4.3 with no errors piggyId = 6
+- node1 sends message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" to 4.35 with no errors piggyId = 6
+- node1 received message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" at 4.05 piggyId = 7
+- node0 received message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" at 4.2 piggyId = 6
+- node0 received message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" at 4.25 piggyId = 7
+- node0 received message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" at 4.3 piggyId = 8
+- node0 received message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" at 4.35 piggyId = 9
+- node1 sends message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" to 4.6 with no errors piggyId = 6
+- node1 sends message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" to 4.65 with no errors piggyId = 7
+- node1 sends message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" to 4.7 with no errors piggyId = 8
+- node1 sends message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" to 4.75 with no errors piggyId = 9
+- node0 received message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" at 4.6 piggyId = 10
+- node0 received message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" at 4.65 piggyId = 11
+- node0 received message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" at 4.7 piggyId = 12
+- node0 received message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" at 4.75 piggyId = 13
+- node1 sends message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" to 5 with no errors piggyId = 10
+- node1 sends message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" to 5.05 with no errors piggyId = 11
+- node1 sends message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" to 5.1 with no errors piggyId = 12
+- ...................
+- node1 end of input file
+- total transmission time= 4.95
+- total number of transmissions= 59
+- the network throughput= 3.23232
+- node0 received message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" at 5 piggyId = 14
+- node0 received message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" at 5.05 piggyId = 15
+- node0 received message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" at 5.1 piggyId = 16
+- node0 sends message with id=0 and content="’E	ô±Ω› ÊX@Êﬁ⁄Àtimes known as `ê167∑∂ê7π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ÊX@Êﬁ⁄Àtimes known as `ê167∑∂ê7π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node1 received message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" at 3.6 piggyId = 5
+- node1 sends message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" to 3.8 with no errors piggyId = 5
+- node0 received message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" at 3.8 piggyId = 5
+- node0 sends message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" to 4 with no errors piggyId = 5
+- node0 sends message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" to 4.05 with no errors piggyId = 5
+- node1 received message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" at 4 piggyId = 6
+- node1 sends message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" to 4.2 with no errors piggyId = 6
+- node1 sends message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" to 4.25 with no errors piggyId = 6
+- node1 sends message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" to 4.3 with no errors piggyId = 6
+- node1 sends message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" to 4.35 with no errors piggyId = 6
+- node1 received message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" at 4.05 piggyId = 7
+- node0 received message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" at 4.2 piggyId = 6
+- node0 received message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" at 4.25 piggyId = 7
+- node0 received message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" at 4.3 piggyId = 8
+- node0 received message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" at 4.35 piggyId = 9
+- node1 sends message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" to 4.6 with no errors piggyId = 6
+- node1 sends message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" to 4.65 with no errors piggyId = 7
+- node1 sends message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" to 4.7 with no errors piggyId = 8
+- node1 sends message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" to 4.75 with no errors piggyId = 9
+- node0 received message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" at 4.6 piggyId = 10
+- node0 received message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" at 4.65 piggyId = 11
+- node0 received message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" at 4.7 piggyId = 12
+- node0 received message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" at 4.75 piggyId = 13
+- node1 sends message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" to 5 with no errors piggyId = 10
+- node1 sends message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" to 5.05 with no errors piggyId = 11
+- node1 sends message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" to 5.1 with no errors piggyId = 12
+- ...................
+- node1 end of input file
+- total transmission time= 4.95
+- total number of transmissions= 59
+- the network throughput= 3.23232
+- node0 received message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" at 5 piggyId = 14
+- node0 received message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" at 5.05 piggyId = 15
+- node0 received message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" at 5.1 piggyId = 16
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê±67∑∂ê7π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê±67∑∂ê7π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node1 received message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" at 3.6 piggyId = 5
+- node1 sends message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" to 3.8 with no errors piggyId = 5
+- node0 received message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" at 3.8 piggyId = 5
+- node0 sends message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" to 4 with no errors piggyId = 5
+- node0 sends message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" to 4.05 with no errors piggyId = 5
+- node1 received message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" at 4 piggyId = 6
+- node1 sends message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" to 4.2 with no errors piggyId = 6
+- node1 sends message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" to 4.25 with no errors piggyId = 6
+- node1 sends message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" to 4.3 with no errors piggyId = 6
+- node1 sends message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" to 4.35 with no errors piggyId = 6
+- node1 received message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" at 4.05 piggyId = 7
+- node0 received message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" at 4.2 piggyId = 6
+- node0 received message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" at 4.25 piggyId = 7
+- node0 received message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" at 4.3 piggyId = 8
+- node0 received message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" at 4.35 piggyId = 9
+- node1 sends message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" to 4.6 with no errors piggyId = 6
+- node1 sends message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" to 4.65 with no errors piggyId = 7
+- node1 sends message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" to 4.7 with no errors piggyId = 8
+- node1 sends message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" to 4.75 with no errors piggyId = 9
+- node0 received message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" at 4.6 piggyId = 10
+- node0 received message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" at 4.65 piggyId = 11
+- node0 received message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" at 4.7 piggyId = 12
+- node0 received message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" at 4.75 piggyId = 13
+- node1 sends message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" to 5 with no errors piggyId = 10
+- node1 sends message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" to 5.05 with no errors piggyId = 11
+- node1 sends message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" to 5.1 with no errors piggyId = 12
+- ...................
+- node1 end of input file
+- total transmission time= 4.95
+- total number of transmissions= 59
+- the network throughput= 3.23232
+- node0 received message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" at 5 piggyId = 14
+- node0 received message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" at 5.05 piggyId = 15
+- node0 received message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" at 5.1 piggyId = 16
+- node0 sends message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê16w∑∂ê7π167ππ∑∂í" to 3.2 with modification piggyId = 0
+- node0 sends message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" to 3.25 with no errors piggyId = 0
+- node0 sends message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" to 3.3 with no errors piggyId = 0
+- node0 sends message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" to 3.35 with no errors piggyId = 0
+- node1 received message with id=0 and content="’E	ô±Ω› ‰X@Êﬁ⁄Àtimes known as `ê16w∑∂ê7π167ππ∑∂í" at 3.2 piggyId = 1
+- node1 sends message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" to 3.4 with no errors piggyId = 1
+- node1 sends message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" to 3.45 with no errors piggyId = 1
+- node1 sends message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" to 3.5 with no errors piggyId = 1
+- node1 sends message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" to 3.55 with no errors piggyId = 1
+- node1 received message with id=1 and content="≈FKòÅ—°ï@‰ ‡‰ﬁ»Íctive/$ structur2ê37∫∑24∑367ª≤π4∑3ê860∑:9í" at 3.25 piggyId = 2
+- node1 received message with id=2 and content="ECCÇ±Öπ–Ê@ﬁÃ@Ë–  division Magnol4∑∏4<∫0ñ0∂9∑ê1∞∂62≤óê0∑3¥∑π∏2πõ\À…
+Kâ" at 3.3 piggyId = 3
+- node1 received message with id=3 and content="UD£CîÅâ§ﬁÿﬁŒ“∆¬ÿ function of a f67ª≤π4πê:7ê30±¥∂4∫0∫2ê92∏97≤:±∫[€ã	" at 3.35 piggyId = 4
+- node0 received message with id=0 and content="’D£CîÅŸ•ﬁÿ“‹X@Êﬂmetimes known arê0ê34≤262í" at 3.4 piggyId = 1
+- node0 sends message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" to 3.6 with no errors piggyId = 1
+- node0 received message with id=1 and content="FKôÅÑÅ›ﬁﬁ» ‹@∆—ordophone (strin3ê4∑9∫9:∂≤∑:í" at 3.45 piggyId = 2
+- node0 received message with id=2 and content="UFKpÅ—°î@Ï“ﬁÿ“‹Afamily.$" at 3.5 piggyId = 3
+- node0 received message with id=3 and content="TDk{Õ–Åÿ“ﬁÿ“‹Ê@–ave a hollow woo≤2∑17≤<ó" at 3.55 piggyId = 4
+- node1 received message with id=4 and content="F´õ’Ö±±Ú@ƒÚ@‡‰ﬁviding a mechaniπ∂ê37π:42ê:∑4∑∑7≥9∏2π6ê;¥∫42YŸ‹Àâ" at 3.6 piggyId = 5
+- node1 sends message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" to 3.8 with no errors piggyId = 5
+- node0 received message with id=4 and content="EDK°Å•ÃÄË– @Ê⁄¬Ÿlest and thus hi≥¥2π∫∏4∫1¥2≤4∑9∫9:∂≤∑:" at 3.8 piggyId = 5
+- node0 sends message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" to 4 with no errors piggyId = 5
+- node0 sends message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" to 4.05 with no errors piggyId = 5
+- node1 received message with id=5 and content="ÖE3bΩ›ï»Ê@⁄¬Ú@Ã√cilitate outcrosπ¥∑3óí" at 4 piggyId = 6
+- node1 sends message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" to 4.2 with no errors piggyId = 6
+- node1 sends message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" to 4.25 with no errors piggyId = 6
+- node1 sends message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" to 4.3 with no errors piggyId = 6
+- node1 sends message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" to 4.35 with no errors piggyId = 6
+- node1 received message with id=6 and content="CC2’Õ•Ω‹@ﬁÃ@Ê‡ rm and eggs fromê24≥32π2∑:4∑24ª4≤:∞∂9ê4∑0ê87∏:[][€äI" at 4.05 piggyId = 7
+- node0 received message with id=5 and content="ƒBCõΩ¡…Ñ‹ﬁR@“‹@Ëhe family in ref∫∂0π:π≤ó" at 4.2 piggyId = 6
+- node0 received message with id=6 and content="D€
+tÅQ† @Ï“ﬁÿ“‹ typically has g7∫π9∫94∑3πñ" at 4.25 piggyId = 7
+- node0 received message with id=7 and content="UCCõΩµîÅ∆¬‹@–¬ÏÀ five/$), usualm<ê::∑2≤4∑82π32±∫" at 4.3 piggyId = 8
+- node0 received message with id=8 and content="TF3Kô—°Ã@Ó“Ë–@‹ﬁtes G3, D4, A4, "öñ" at 4.35 piggyId = 9
+- node1 sends message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" to 4.6 with no errors piggyId = 6
+- node1 sends message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" to 4.65 with no errors piggyId = 7
+- node1 sends message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" to 4.7 with no errors piggyId = 8
+- node1 sends message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" to 4.75 with no errors piggyId = 9
+- node0 received message with id=9 and content="ïGsêÅ•Õ@⁄ﬁÊË@∆ﬂmmonly played bxê290ª¥∑3í" at 4.6 piggyId = 10
+- node0 received message with id=10 and content="DG	âΩ‹Ä¬∆‰ﬁÊÊ@“ts strings.$" at 4.65 piggyId = 11
+- node0 received message with id=11 and content="EK†ÅçÖ∏@¬ÿÊﬁ@ƒÀ played by pluck¥∑3í" at 4.7 piggyId = 12
+- node0 received message with id=12 and content="îG£BîÅÕ—‰“‹ŒÊ^H@with the fingersê84Ω=4±∞∫7îí" at 4.75 piggyId = 13
+- node1 sends message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" to 5 with no errors piggyId = 10
+- node1 sends message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" to 5.05 with no errors piggyId = 11
+- node1 sends message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" to 5.1 with no errors piggyId = 12
+- ...................
+- node1 end of input file
+- total transmission time= 4.95
+- total number of transmissions= 59
+- the network throughput= 3.23232
+- node0 received message with id=13 and content="‘Grê∞Å•‹@Ê‡ ∆“√lized cases, by 9∫94µ¥∑3í" at 5 piggyId = 14
+- node0 received message with id=14 and content="’F£BîÅÕ—‰“‹ŒÊ@Ó”th the wooden sh≤2óí7≥:42ê17ªí" at 5.05 piggyId = 15
+- node0 received message with id=15 and content="UBCΩ∞Å± Œ‹ﬁR\" at 5.1 piggyId = 16

@@ -58,6 +58,186 @@ bits Node::calculateCRC(string msg_in_bits, bitset<8> generator_function)
     return rem_in_bits;
 }
 
+vector<int> Node::generateHammingCode(vector<int> msgBits, int m, int r)
+{
+    // Stores the Hamming Code
+    vector<int> hammingCode(r + m);
+    // Find positions of redundant bits
+    for (int i = 0; i < r; ++i)
+    {
+        // Placing -1 at redundant bits place to identify it later
+        hammingCode[pow(2, i) - 1] = -1;
+    }
+    int j = 0;
+    // Iterate to update the code
+    for (int i = 0; i < (r + m); i++)
+    {
+        // Placing msgBits where -1 is absent i.e., except redundant bits all positions are msgBits
+        if (hammingCode[i] != -1)
+        {
+            hammingCode[i] = msgBits[j];
+            j++;
+        }
+    }
+    for (int i = 0; i < (r + m); i++)
+    {
+        // If current bit is not redundant bit then continue
+        if (hammingCode[i] != -1)
+            continue;
+
+        int x = log2(i + 1);
+        int one_count = 0;
+        // Find msg bits containing set bit at x'th position
+        for (int j = i + 2; j <= (r + m); ++j)
+        {
+            if (j & (1 << x))
+            {
+                if (hammingCode[j - 1] == 1)
+                {
+                    one_count++;
+                }
+            }
+        }
+        // Generating hamming code for even parity
+        if (one_count % 2 == 0)
+        {
+            hammingCode[i] = 0;
+        }
+        else
+        {
+            hammingCode[i] = 1;
+        }
+    }
+    // Return the generated code
+    return hammingCode;
+}
+
+// Function to find the hamming code of the given message bit msgBit[]
+vector<int> Node::findHammingCode(vector<int>& msgBits)
+{
+    // Message bit size
+    int m = msgBits.size();
+    // r is the number of redundant bits
+    int r = 1;
+    // Find no. of redundant bits
+    while (pow(2, r) < (m + r + 1))
+    {
+        r++;
+    }
+    // Generating Code
+    vector<int> hamming = generateHammingCode(msgBits, m, r);
+    return hamming;
+}
+
+vector<int> Node::generateMsg(vector<int> hamming, int m, int r)
+{
+    // Stores the message
+    vector<int> msg;
+    // Stores indices of redundant bits
+    vector<int> positionRedundant;
+    // Find positions of redundant bits
+    for (int i = 0; i < r; ++i)
+    {
+        // Placing index of redundant bit in a vector for later use
+        positionRedundant.push_back(pow(2, i) - 1);
+    }
+    for (int i = 0; i < hamming.size(); i++)
+    {
+        // If current index in hamming code is not index of redundant bit put it in msg
+        if (find(positionRedundant.begin(), positionRedundant.end(), i) == positionRedundant.end())
+        {
+            msg.push_back(hamming[i]);
+        }
+    }
+    return msg;
+}
+
+vector<int> Node::findMsg(vector<int>& hamming)
+{
+    // Hamming code bit size
+    int size = hamming.size();
+    // r is the number of redundant bits
+    int r = 1;
+    // Find no. of redundant bits
+    while (pow(2, r) < (size + 1))
+    {
+        r++;
+    }
+    //cout << r << endl;
+    vector<int> msgBits = generateMsg(hamming, size - r, r);
+    return msgBits;
+}
+
+int Node::receiveHamming(vector<int> hamming, bool& error)
+{
+    // Hamming code bit size
+    int size = hamming.size();
+    // r is the number of redundant bits
+    int r = 1;
+    // Find no. of redundant bits
+    while (pow(2, r) < (size + 1))
+    {
+        r++;
+    }
+    vector<int> positionRedundant;
+    // Find positions of redundant bits
+    for (int i = 0; i < r; ++i)
+    {
+        positionRedundant.push_back(pow(2, i) - 1);
+    }
+    // change 1 bit in code
+    //hamming[0] = 1;
+    for (int i = 0; i < size; i++)
+    {
+        // If current bit is not redundant bit then continue
+        if (find(positionRedundant.begin(), positionRedundant.end(), i) == positionRedundant.end())
+            continue;
+
+        int x = log2(i + 1);
+        int one_count = 0;
+        // Find msg bits containing set bit at x'th position
+        for (int j = i + 2; j <= size; ++j)
+        {
+            if (j & (1 << x))
+            {
+                if (hamming[j - 1] == 1)
+                {
+                    one_count++;
+                }
+            }
+        }
+        // Generating hamming code for even parity
+        if (one_count % 2 == 0)
+        {
+            hamming[i] = hamming[i] ^ 0;
+        }
+        else
+        {
+            hamming[i] = hamming[i] ^ 1;
+        }
+    }
+    string errorPos;
+    for (int i = 0; i < r; ++i)
+    {
+        errorPos += to_string(hamming[positionRedundant[i]]);
+        //cout << hamming[positionRedundant[i]] << endl;
+    }
+    //cout << errorPos << endl;
+    reverse(errorPos.begin(),errorPos.end());
+    char * pEnd;
+    int errorPosition = strtoull(errorPos.c_str(), &pEnd, 2);
+    //cout << errorPosition << endl;
+    if (errorPosition == 0)
+    {
+        return -1;
+    }
+    else
+    {
+        error = true;
+        return errorPosition - 1;
+    }
+}
+
 void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *rmsg, double betweenFramesDelay, bool receivedNACK)
 {
     string errorBits = msgPair.first;
@@ -96,22 +276,78 @@ void Node::handleData(pair<string, string> msgPair, int seqNo, MyMessage_Base *r
     msgText = "$" + newMsgText + "$";
     msg_in_bits += "0000000";
 
+    int errorHandle = getParentModule()->par("errorHandle").intValue(); //get it from .ini file
+    if (errorHandle == 0)
+    {
+        //Set the CRC of the msg
+            bitset<8> generator_bits(generator);
+            bitset<8> crc = calculateCRC(msg_in_bits, generator_bits);
+            nmsg->setCrc(crc);
+    }
+    else
+    {
+        vector<int> msgBits;
+        bitset<8> byte;
+        for (int i = 0; i < msgText.size(); ++i)
+        {
+            byte= msgText.c_str()[i];
+            //cout << byte << endl;
+            for (int j = 7; j > -1; j--)
+            {
+                msgBits.push_back(byte[j]);
+            }
+        }
 
-    //Set the CRC of the msg
-    bitset<8> generator_bits(generator);
-    bitset<8> crc = calculateCRC(msg_in_bits, generator_bits);
-    nmsg->setCrc(crc);
+        // Function Call
+        vector<int> hamming = findHammingCode(msgBits);
 
+        cout << "Message bits are:           ";
+        for (int i = 0; i < msgBits.size(); i++)
+            cout << msgBits[i] << " ";
+        cout << endl;
 
+        cout << "Hamming code is:            ";
+        for (int i = 0; i < hamming.size(); i++)
+            cout << hamming[i] << " ";
+        cout << endl;
+
+        if(!receivedNACK && errorBits[0] == '1'){
+            int randIndex = std::rand() % hamming.size(); // get random index of text message to error it
+            hamming[randIndex] = (hamming[randIndex] == 0) ? 1 : 0;
+        }
+
+        //int numChar = hamming.size();
+        int j = 7;
+        msgText = "";
+        for (int i = 0; i < hamming.size(); i++)
+        {
+            //if (numChar == 0)
+                //break;
+            byte[j] = hamming[i];
+            j--;
+            if(j == -1)
+            {
+                msgText += byte.to_ulong();
+                //numChar--;
+                j = 7;
+                //cout << byte.to_ulong() << endl;
+                byte = 0;
+            }
+        }
+        cout << "After encoding: " << msgText << endl;
+    }
 
     string errors = "";
 
     if (!receivedNACK && errorBits[0] == '1') //modification
     {
         errors += errors.length() > 0 ? ", modification" : "modification";
-        int randChar = std::rand() % msgText.length(); // get random index of text message to error it
-        //bitset<8> rem_in_bits(msgText[randChar]);
-        msgText[randChar] ^= (std::rand() % 8);
+        if(errorHandle == 0){
+            int randChar = std::rand() % msgText.length(); // get random index of text message to error it
+            //bitset<8> rem_in_bits(msgText[randChar]);
+            msgText[randChar] ^= (std::rand() % 8) +1;
+        }
+
     }
     if (!receivedNACK && errorBits[1] == '1') //loss
     {
@@ -293,40 +529,115 @@ void Node::handleMessage(cMessage *msg)
             string temp_byte_stuffing = "";
             string msg_in_bits = "";
 
-            bitset<8> generator_bits(generator);
-            int no_of_itr = msg_recieved.size();
-            // a boolean that is set if the previous character was an esc
-            // to prevent the esc of every esc in the string
-            bool is_esc = false;
-            bitset<8> start_byte(msg_recieved[0]);
-            msg_in_bits += start_byte.to_string();
-            // Remove the byte stuffing and converting the string to bits
-            for (int i = 1; i < no_of_itr - 1; i++)
+            int mtype = 1;
+            int errorHandle = getParentModule()->par("errorHandle").intValue(); //get it from .ini file
+            if (errorHandle == 0)
             {
-                bitset<8> temp(msg_recieved[i]);
-                msg_in_bits += temp.to_string();
-                if (msg_recieved[i] != '/')
+                bitset<8> generator_bits(generator);
+                int no_of_itr = msg_recieved.size();
+                // a boolean that is set if the previous character was an esc
+                // to prevent the esc of every esc in the string
+                bool is_esc = false;
+                bitset<8> start_byte(msg_recieved[0]);
+                msg_in_bits += start_byte.to_string();
+                // Remove the byte stuffing and converting the string to bits
+                for (int i = 1; i < no_of_itr - 1; i++)
                 {
-                    temp_byte_stuffing += msg_recieved[i];
+                    bitset<8> temp(msg_recieved[i]);
+                    msg_in_bits += temp.to_string();
+                    if (msg_recieved[i] != '/')
+                    {
+                        temp_byte_stuffing += msg_recieved[i];
+                    }
+                    else if (msg_recieved[i] == '/' && is_esc)
+                    {
+                        temp_byte_stuffing += msg_recieved[i];
+                        is_esc = false;
+                    }
+                    else
+                    {
+                        is_esc = true;
+                    }
                 }
-                else if (msg_recieved[i] == '/' && is_esc)
-                {
-                    temp_byte_stuffing += msg_recieved[i];
-                    is_esc = false;
-                }
-                else
-                {
-                    is_esc = true;
-                }
-            }
-            bitset<8> end_byte(msg_recieved[0]);
-            msg_in_bits += end_byte.to_string() + rmsg->getCrc().to_string().substr(1);
+                bitset<8> end_byte(msg_recieved[0]);
+                msg_in_bits += end_byte.to_string() + rmsg->getCrc().to_string().substr(1);
 
-            // Recalculating the CRC of the received msg
-            bitset<8> crc = calculateCRC(msg_in_bits, generator_bits);
-            bitset<8> zeros("00000000");
-            //check if any error happened in the transmission (by the rem of the CRC)
-            int mtype = (crc == zeros) ? 1 : 2;
+                // Recalculating the CRC of the received msg
+                bitset<8> crc = calculateCRC(msg_in_bits, generator_bits);
+                bitset<8> zeros("00000000");
+                //check if any error happened in the transmission (by the rem of the CRC)
+                mtype = (crc == zeros) ? 1 : 2;
+            }
+            else
+            {
+                cout << "Received hamming code: " << msg_recieved << endl;
+                vector<int> hamming;
+                bitset<8> byte;
+                for (int i = 0; i < msg_recieved.size(); ++i)
+                {
+                    byte= msg_recieved.c_str()[i];
+                    //cout << byte << endl;
+                    for (int j = 7; j > -1; j--)
+                    {
+                        hamming.push_back(byte[j]);
+                    }
+                }
+
+                bool error = false;
+                int errorPos = -1;
+                vector<int> correctedMsg;
+                errorPos = receiveHamming(hamming, error);
+                if (error)
+                {
+                    cout << "Error at bit position: " << errorPos + 1 << endl;
+//                    cout << "Hamming code with error is: ";
+//                    for (int i = 0; i < hamming.size(); i++)
+//                        cout << hamming[i] << " ";
+//                    cout << endl;
+                    if (hamming[errorPos] == 0)
+                    {
+                        hamming[errorPos] = 1;
+                    }
+                    else
+                    {
+                        hamming[errorPos] = 0;
+                    }
+
+//                    cout << "Corrected Hamming code is:  ";
+//                    for (int i = 0; i < hamming.size(); i++)
+//                        cout << hamming[i] << " ";
+//                    cout << endl;
+//
+                      correctedMsg = findMsg(hamming);
+                      //cout << "Corrected message: " << correctedMsg << endl;
+//                    cout << "Corrected Message bits are: ";
+//                    for (int i = 0; i < correctedMsg.size(); i++)
+//                        cout << correctedMsg[i] << " ";
+//                    cout << endl;
+                }
+                correctedMsg = findMsg(hamming);
+
+                string receivedMsg;
+                int numChar = correctedMsg.size() / 8;
+                int j = 7;
+                for (int i = 0; i < correctedMsg.size(); i++)
+                {
+                    if (numChar == 0)
+                        break;
+                    byte[j] = correctedMsg[i];
+                    j--;
+                    if(j == -1)
+                    {
+                        receivedMsg += byte.to_ulong();
+                        numChar--;
+                        j = 7;
+                        //cout << byte.to_ulong() << endl;
+                        byte = 0;
+                    }
+                }
+                cout << "After decoding: " << receivedMsg << endl;
+            }
+
 
             //check for receiving:
             if(Rn == rmsg->getMsgID())//-> correct; what I am expecting
