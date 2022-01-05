@@ -326,30 +326,42 @@ void Node::handleMessage(cMessage *msg)
             bitset<8> crc = calculateCRC(msg_in_bits, generator_bits);
             bitset<8> zeros("00000000");
             //check if any error happened in the transmission (by the rem of the CRC)
-            int mtype = (crc == zeros) ? 1 : 2;
+            int mtype = (crc == zeros ) ? 1 : 2;
+
 
             //check for receiving:
             if(Rn == rmsg->getMsgID())//-> correct; what I am expecting
             {
                 //send data normal with its ack
+
                 arrived[rmsg->getMsgID()-Rn]=true;
                 //if(mtype!=2){
+                bool allRec = true;
                     for(int k=0; k<windowSize;++k){
                         if(arrived[k]){ //arrived = [t,f,t,t]
                             Ack_Num++;
                             arrived[k]=false;   //arrived[0]=false
                         }
                         else{   //arrived = [f,t,t,f]
+                            allRec = false;
                             cout << "hereeeeeee" <<endl;
-                            for(int j=k+1;j<windowSize-1;++j){
-                                arrived[j-1]=arrived[j];
+                            int temp_index = 0;
+                            for(int j=k;j<windowSize;++j){
+                                arrived[temp_index++]=arrived[j];
                             }
-                            arrived[windowSize-1]=false;
+                            for (int j=temp_index;j<windowSize;j++){
+                                arrived[j]=false;
+
+                            }
+
                             break;
                         }
                     }
+
+
                 //}
                 //Ack_Num = rmsg->getMsgID()+1;
+                    mtype = (crc == zeros && allRec ) ? 1 : 2;
                 sentNACK =false;
                 Rn = Ack_Num;
                 handleACK(Ack_Num, mtype, newmsg);
@@ -472,7 +484,7 @@ void Node::handleMessage(cMessage *msg)
 //                }
                 //Ack_Num = rmsg->getPiggyBackingID();
                 //Rn = Ack_Num;
-                cout << "After ACK_Num : " <<  Ack_Num <<endl;
+                cout << "After ACK_Num : " <<  rmsg->getPiggyBackingID() <<endl;
                 //newmsg->setPiggyBackingID(Ack_Num);
 
 
