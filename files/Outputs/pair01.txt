@@ -2,54 +2,56 @@
 - node0 loss the frame with message id=1 at 3.25 piggyId = 0
 - node0 sends message with id=2 and content="$(plants of the division Magnoliophyta, also called// angiosperms/$).$" to 3.3 with no errors piggyId = 0
 - node0 sends message with id=3 and content="$The biological function of a flower is to facilitate reproduction,$" to 3.35 with no errors piggyId = 0
+
 - node1 received message with id=2 and content="$(plants of the division Magnoliophyta, also called// angiosperms/$).$" at 3.3 piggyId = 0
 - node1 sends message with id=0 and content="$The violin, sometimes known as a fiddle$" to 3.5 with no errors piggyId = 0
 - node1 sends message with id=1 and content="$is a wooden chordophone (string instrument)$" to 3.55 with no errors piggyId = 0
 - node1 sends message with id=2 and content="$in the violin family.$" to 3.6 with no errors piggyId = 0
 - node1 sends message with id=3 and content="$Most violins have a hollow wooden body.$" to 3.65 with no errors piggyId = 0
 - node1 received message with id=3 and content="$The biological function of a flower is to facilitate reproduction,$" at 3.35 piggyId = 0
+
 - node0 received message with id=0 and content="$The violin, sometimes known as a fiddle$" at 3.5 piggyId = 1
 - node0 sends message with id=0 and content="$A flower, sometimes known as a bloom or blossom$" to 3.7 with no errors piggyId = 1
 - node0 received message with id=1 and content="$is a wooden chordophone (string instrument)$" at 3.55 piggyId = 2
 - node0 received message with id=2 and content="$in the violin family.$" at 3.6 piggyId = 3
 - node0 received message with id=3 and content="$Most violins have a hollow wooden body.$" at 3.65 piggyId = 4
+
 - node1 received message with id=0 and content="$A flower, sometimes known as a bloom or blossom$" at 3.7 piggyId = 1
-- node1 sends message with id=1 and content="$is a wooden chordophone (string instrument)$" to 3.9 with no errors piggyId = 1
-- node0 sends message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" to 4.1 with no errors piggyId = 1
+- node1 sends message with id=4 and content="$It is the smallest and thus highest-pitched instrument$" to 3.9 with no errors piggyId = 1
+
+- node0 received message with id=4 and content="$It is the smallest and thus highest-pitched instrument$" at 3.9 piggyId = 5
+- node0 sends message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" to 4.1 with no errors piggyId = 5
+
 - node1 received message with id=1 and content="$is the reproductive/$ structure found in flowering plants$" at 4.1 piggyId = 4
-- node1 sends message with id=1 and content="$is a wooden chordophone (string instrument)$" to 4.3 with no errors piggyId = 4
-- node0 sends message with id=4 and content="$usually by providing a mechanism for the union of sperm with eggs.$" to 4.5 with no errors piggyId = 4
+- node1 sends message with id=5 and content="$(soprano) in the family in regular use.$" to 4.3 with no errors piggyId = 4
+- node1 sends message with id=6 and content="$[a] The violin typically has four strings,$" to 4.35 with no errors piggyId = 4
+- node1 sends message with id=7 and content="$(some can have five/$), usually tuned in perfect$" to 4.4 with no errors piggyId = 4
+- node1 sends message with id=8 and content="$fifths with notes G3, D4, A4, E5,$" to 4.45 with no errors piggyId = 4
+
+- node0 received message with id=5 and content="$(soprano) in the family in regular use.$" at 4.3 piggyId = 6
+- node0 sends message with id=4 and content="$usually by providing a mechanism for the union of sperm with eggs.$" to 4.5 with no errors piggyId = 6
+- node0 sends message with id=5 and content="$Flowers may facilitate outcrossing/$$" to 4.55 with no errors piggyId = 6
+- node0 sends message with id=6 and content="$(fusion of sperm and eggs from different individuals in a population)$" to 4.6 with no errors piggyId = 6
+- node0 received message with id=6 and content="$[a] The violin typically has four strings,$" at 4.35 piggyId = 7
+- node0 received message with id=7 and content="$(some can have five/$), usually tuned in perfect$" at 4.4 piggyId = 8
+- node0 received message with id=8 and content="$fifths with notes G3, D4, A4, E5,$" at 4.45 piggyId = 9
 - node1 received message with id=4 and content="$usually by providing a mechanism for the union of sperm with eggs.$" at 4.5 piggyId = 5
-- node1 sends message with id=4 and content="$It is the smallest and thus highest-pitched instrument$" to 4.7 with no errors piggyId = 5
-- node0 received message with id=4 and content="$It is the smallest and thus highest-pitched instrument$" at 4.7 piggyId = 5
-- node0 sends message with id=5 and content="$Flowers may facilitate outcrossing/$$" to 4.9 with no errors piggyId = 5
-- node1 received message with id=5 and content="$Flowers may facilitate outcrossing/$$" at 4.9 piggyId = 6
-- node1 sends message with id=5 and content="$(soprano) in the family in regular use.$" to 5.1 with no errors piggyId = 6
-- node0 received message with id=5 and content="$(soprano) in the family in regular use.$" at 5.1 piggyId = 6
-- node0 sends message with id=6 and content="$(fusion of sperm and eggs from different individuals in a population)$" to 5.3 with no errors piggyId = 6
-- node1 received message with id=6 and content="$(fusion of sperm and eggs from different individuals in a population)$" at 5.3 piggyId = 7
-- node1 sends message with id=6 and content="$[a] The violin typically has four strings,$" to 5.5 with no errors piggyId = 7
-- node0 received message with id=6 and content="$[a] The violin typically has four strings,$" at 5.5 piggyId = 7
-- node1 sends message with id=7 and content="$(some can have five/$), usually tuned in perfect$" to 5.9 with no errors piggyId = 7
-- node0 received message with id=7 and content="$(some can have five/$), usually tuned in perfect$" at 5.9 piggyId = 8
-- node1 sends message with id=8 and content="$fifths with notes G3, D4, A4, E5,$" to 6.3 with no errors piggyId = 8
-- node0 received message with id=8 and content="$fifths with notes G3, D4, A4, E5,$" at 6.3 piggyId = 9
-- node1 sends message with id=9 and content="$and is most commonly played by drawing$" to 6.7 with no errors piggyId = 9
-- node0 received message with id=9 and content="$and is most commonly played by drawing$" at 6.7 piggyId = 10
-- node1 sends message with id=10 and content="$a bow across its strings.$" to 7.1 with no errors piggyId = 10
-- node0 received message with id=10 and content="$a bow across its strings.$" at 7.1 piggyId = 11
-- node1 sends message with id=11 and content="$It can also be played by plucking$" to 7.5 with no errors piggyId = 11
-- node0 received message with id=11 and content="$It can also be played by plucking$" at 7.5 piggyId = 12
-- node1 sends message with id=12 and content="$the strings/$ with the fingers (pizzicato)$" to 7.9 with no errors piggyId = 12
-- node0 received message with id=12 and content="$the strings/$ with the fingers (pizzicato)$" at 7.9 piggyId = 13
-- node1 sends message with id=13 and content="$and, in specialized cases, by striking$" to 8.3 with no errors piggyId = 13
-- node0 received message with id=13 and content="$and, in specialized cases, by striking$" at 8.3 piggyId = 14
-- node1 sends message with id=14 and content="$the strings with the wooden side/$ of the bow$" to 8.7 with no errors piggyId = 14
-- node0 received message with id=14 and content="$the strings with the wooden side/$ of the bow$" at 8.7 piggyId = 15
-- node1 sends message with id=15 and content="$(col legno).$" to 9.1 with no errors piggyId = 15
-- node0 received message with id=15 and content="$(col legno).$" at 9.1 piggyId = 16
+- node1 sends message with id=9 and content="$and is most commonly played by drawing$" to 4.7 with no errors piggyId = 5
+- node1 sends message with id=10 and content="$a bow across its strings.$" to 4.75 with no errors piggyId = 7
+- node1 sends message with id=11 and content="$It can also be played by plucking$" to 4.8 with no errors piggyId = 8
+- node1 sends message with id=12 and content="$the strings/$ with the fingers (pizzicato)$" to 4.85 with no errors piggyId = 9
+- node0 received message with id=9 and content="$and is most commonly played by drawing$" at 4.7 piggyId = 10
+- node0 received message with id=10 and content="$a bow across its strings.$" at 4.75 piggyId = 11
+- node0 received message with id=11 and content="$It can also be played by plucking$" at 4.8 piggyId = 12
+- node0 received message with id=12 and content="$the strings/$ with the fingers (pizzicato)$" at 4.85 piggyId = 13
+- node1 sends message with id=13 and content="$and, in specialized cases, by striking$" to 5.1 with no errors piggyId = 10
+- node1 sends message with id=14 and content="$the strings with the wooden side/$ of the bow$" to 5.15 with no errors piggyId = 11
+- node1 sends message with id=15 and content="$(col legno).$" to 5.2 with no errors piggyId = 12
 - ...................
 - node1 end of input file
-- total transmission time= 9.3
-- total number of transmissions= 67
-- the network throughput= 1.72043
+- total transmission time= 5.05
+- total number of transmissions= 57
+- the network throughput= 3.16832
+- node0 received message with id=13 and content="$and, in specialized cases, by striking$" at 5.1 piggyId = 14
+- node0 received message with id=14 and content="$the strings with the wooden side/$ of the bow$" at 5.15 piggyId = 15
+- node0 received message with id=15 and content="$(col legno).$" at 5.2 piggyId = 16

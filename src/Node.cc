@@ -337,13 +337,18 @@ void Node::handleMessage(cMessage *msg)
                 arrived[rmsg->getMsgID()-Rn]=true;
                 //if(mtype!=2){
                 bool allRec = true;
+                for(int m=0;m<max_arrived_id -Rn;m++){
+                    if(!arrived[m])
+                        allRec = false;
+
+                }
                     for(int k=0; k<windowSize;++k){
-                        if(arrived[k]){ //arrived = [t,f,t,t]
+                        if(arrived[k]){ //arrived = [t,t,t,f] [f,t,t,f]
                             Ack_Num++;
                             arrived[k]=false;   //arrived[0]=false
                         }
                         else{   //arrived = [f,t,t,f]
-                            allRec = false;
+//                            allRec = false;
                             cout << "hereeeeeee" <<endl;
                             int temp_index = 0;
                             for(int j=k;j<windowSize;++j){
@@ -368,6 +373,7 @@ void Node::handleMessage(cMessage *msg)
             }
             else if(Rn < rmsg->getMsgID() && Rn + windowSize > rmsg->getMsgID())// && !sentNACK)//->loss or delay
             {
+                max_arrived_id = rmsg->getMsgID();
                 //send NACK and buffer this frame
                 cout << "Lost/Delay case: Rn= " <<Rn << " - rec msgId= " <<rmsg->getMsgID() <<endl;
                 arrived[rmsg->getMsgID()-Rn]=true; //arr = [f,f,t,t]

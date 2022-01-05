@@ -47,7 +47,7 @@ public:
     int Sf = 0;// start of sending frame
     int Sn = 0;// sending frame number
     int Rn = 0;// receiving frame number
-    bool therexistsframes = false;
+    int max_arrived_id = 0;
     vector<bool> arrived; //used to simulate the buffer for arrived frames
     vector<bool> sentArr;
     //helper functions:
