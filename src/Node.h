@@ -21,7 +21,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <string.h>
+#include <string>
+#include <algorithm>
 #include "MyMessage_m.h"
 using namespace std;
 using namespace omnetpp;
@@ -47,7 +48,6 @@ public:
     int Sf = 0;// start of sending frame
     int Sn = 0;// sending frame number
     int Rn = 0;// receiving frame number
-    bool therexistsframes = false;
     vector<bool> arrived; //used to simulate the buffer for arrived frames
     vector<bool> sentArr;
     //helper functions:
@@ -55,6 +55,11 @@ public:
     void handleData(pair<string, string>, int, MyMessage_Base *,double,bool);
     void handleACK(int, int, MyMessage_Base *);
     bitset<8> calculateCRC(string, bitset<8>);
+    vector<int> generateHammingCode(vector<int> msgBits, int m, int r);
+    vector<int> findHammingCode(vector<int>& msgBits);
+    vector<int> generateMsg(vector<int> hamming, int m, int r);
+    vector<int> findMsg(vector<int>& hamming);
+    int receiveHamming(vector<int> hamming, bool& error);
 
 protected:
     virtual void initialize();
